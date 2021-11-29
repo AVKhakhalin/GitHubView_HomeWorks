@@ -12,6 +12,7 @@
         android:id="@+id/tv_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/tv_login_text_size"
         android:layout_marginStart="@dimen/tv_login_margin_start"
         tools:text="@string/tv_login_tools_text" />
 

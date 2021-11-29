@@ -1,6 +1,5 @@
 package ru.geekbrains.popular.libraries.githubview_homeworks.ui.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import moxy.MvpAppCompatActivity
@@ -40,8 +39,6 @@ class MainActivity: MvpAppCompatActivity(), MainView {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
-
         supportFragmentManager.fragments.forEach {
             if (it is BackButtonListener && it.backPressed()) {
                 return
