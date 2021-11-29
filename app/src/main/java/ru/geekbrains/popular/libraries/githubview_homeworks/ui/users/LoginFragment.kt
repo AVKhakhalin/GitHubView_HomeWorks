@@ -4,16 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.geekbrains.popular.libraries.githubview_homeworks.App
-import ru.geekbrains.popular.libraries.githubview_homeworks.databinding.FragmentUsersBinding
+import ru.geekbrains.popular.libraries.githubview_homeworks.databinding.FragmentLoginBinding
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubUsersRepository
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.users.adapter.UsersAdapter
 
-class UsersFragment: MvpAppCompatFragment(), UsersView, BackButtonListener {
+class LoginFragment(
+    private val login: String
+): MvpAppCompatFragment(), UsersView, BackButtonListener {
 
     /** Задание переменных */ //region
     private val presenter by moxyPresenter {
@@ -23,7 +24,7 @@ class UsersFragment: MvpAppCompatFragment(), UsersView, BackButtonListener {
         )
     }
     // binding
-    private var _binding: FragmentUsersBinding? = null
+    private var _binding: FragmentLoginBinding? = null
     private val binding
         get() = _binding!!
     // adapter
@@ -33,7 +34,7 @@ class UsersFragment: MvpAppCompatFragment(), UsersView, BackButtonListener {
     //endregion
 
     companion object {
-        fun newInstance() = UsersFragment()
+        fun newInstance(login: String) = LoginFragment(login)
     }
 
     override fun onCreateView(
@@ -41,15 +42,15 @@ class UsersFragment: MvpAppCompatFragment(), UsersView, BackButtonListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentUsersBinding.inflate(inflater, container, false)
+        _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.usersListRecycler.layoutManager = LinearLayoutManager(requireContext())
-        binding.usersListRecycler.adapter = adapter
+        /** Установка отображение логина пользователя */
+        binding.userLogin.text = login
     }
 
     override fun updateList() {

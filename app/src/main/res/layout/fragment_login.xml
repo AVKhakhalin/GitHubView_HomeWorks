@@ -8,11 +8,12 @@
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/users_list_recycler"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/user_login"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/item_user"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/user_login_text_size"
+        tools:text="@string/user_login_tools_text"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

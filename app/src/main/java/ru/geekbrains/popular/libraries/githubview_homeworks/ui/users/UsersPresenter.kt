@@ -4,12 +4,13 @@ import com.github.terrakok.cicerone.Router
 import moxy.MvpPresenter
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubUsersRepository
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
+import ru.geekbrains.popular.libraries.githubview_homeworks.screens.AppScreens
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.IListPresenter
 
 class UsersPresenter(
     private val router: Router,
     private val usersRepository: GithubUsersRepository,
-) : MvpPresenter<UsersView>() {
+): MvpPresenter<UsersView>() {
 
     val usersListPresenter = UsersListPresenter()
 
@@ -18,7 +19,10 @@ class UsersPresenter(
 
         loadData()
 
-        usersListPresenter.itemClickListener = {} // todo
+        usersListPresenter.itemClickListener = { userItemView ->
+            router.navigateTo(AppScreens.loginScreen(
+                usersRepository.getUsers()[userItemView.pos].login))
+        }
     }
 
     private fun loadData() {
@@ -33,11 +37,12 @@ class UsersPresenter(
         return true
     }
 
-    class UsersListPresenter : IListPresenter<UserItemView> {
+    class UsersListPresenter: IListPresenter<UserItemView> {
 
         val users = mutableListOf<GithubUserModel>()
 
-        override var itemClickListener = { }
+        override var itemClickListener: (UserItemView) -> Unit = {
+        }
 
         override fun getCount() = users.size
 

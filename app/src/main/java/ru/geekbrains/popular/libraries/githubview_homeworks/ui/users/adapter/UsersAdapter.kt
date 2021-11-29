@@ -15,7 +15,7 @@ class UsersAdapter(
         return UserViewHolder(
             ItemUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         ).apply {
-            itemView.setOnClickListener { presenter.itemClickListener() }
+            itemView.setOnClickListener { presenter.itemClickListener(this) }
         }
     }
 
