@@ -9,7 +9,7 @@ class GithubUsersRepository {
         GithubUserModel("Васильев Ильнар Мазарович"),
         GithubUserModel("Гунар Кирилл Викторович"),
         GithubUserModel("Мирзо Юусуп Алиевич"),
-        GithubUserModel("Ким Илья Андреевич"),
+        GithubUserModel("Ким Илья Андреевич")
     )
 
     fun getUsers(): List<GithubUserModel> {

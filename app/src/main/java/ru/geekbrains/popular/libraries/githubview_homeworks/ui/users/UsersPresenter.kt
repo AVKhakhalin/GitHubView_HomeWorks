@@ -9,7 +9,7 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.IListPresent
 
 class UsersPresenter(
     private val router: Router,
-    private val usersRepository: GithubUsersRepository,
+    private val usersRepository: GithubUsersRepository
 ): MvpPresenter<UsersView>() {
 
     val usersListPresenter = UsersListPresenter()
@@ -21,7 +21,8 @@ class UsersPresenter(
 
         usersListPresenter.itemClickListener = { userItemView ->
             router.navigateTo(AppScreens.loginScreen(
-                usersRepository.getUsers()[userItemView.pos].login))
+                    usersRepository.getUsers()[userItemView.pos].login)
+            )
         }
     }
 

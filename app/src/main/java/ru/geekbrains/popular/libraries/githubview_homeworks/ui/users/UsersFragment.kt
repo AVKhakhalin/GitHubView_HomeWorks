@@ -1,9 +1,13 @@
 package ru.geekbrains.popular.libraries.githubview_homeworks.ui.users
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.recyclerview.widget.LinearLayoutManager
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
@@ -50,6 +54,9 @@ class UsersFragment: MvpAppCompatFragment(), UsersView, BackButtonListener {
 
         binding.usersListRecycler.layoutManager = LinearLayoutManager(requireContext())
         binding.usersListRecycler.adapter = adapter
+
+        /** Анимированно отобразить список пользователей */
+        showListUsers()
     }
 
     override fun updateList() {
@@ -65,4 +72,39 @@ class UsersFragment: MvpAppCompatFragment(), UsersView, BackButtonListener {
         super.onDestroy()
         _binding = null
     }
+
+    /** Анимация списка логинов пользователей */ //region
+    fun showListUsers() {
+        /** Начальная установка угла поля вывода для логина */
+        val constraintLayout: ConstraintLayout = binding.usersListContainer
+        val constraintSet = ConstraintSet()
+        constraintSet.clone(constraintLayout)
+        constraintSet.setRotationX(binding.usersListRecycler.id,-90f)
+        constraintSet.setTransformPivotY(binding.usersListRecycler.id,0f)
+        constraintSet.applyTo(constraintLayout)
+
+        /** Анимация появления списка пользвателей */
+        Thread {
+            // Исходные параметры
+            val numberFrames: Int = 30
+            val deltaTime: Long = 10L
+            val deltaAngle: Float = (90 / numberFrames).toFloat()
+            val handler = Handler(Looper.getMainLooper())
+
+            repeat(numberFrames) { counter ->
+                Thread.sleep(deltaTime)
+                handler.post {
+                    val constraintLayout = binding.usersListContainer
+                    val constraintSet = ConstraintSet()
+                    constraintSet.clone(constraintLayout)
+                    constraintSet.setRotationX(
+                        binding.usersListRecycler.id,
+                        -90 + counter * deltaAngle
+                    )
+                    constraintSet.applyTo(constraintLayout)
+                }
+            }
+        }.start()
+    }
+    //endregion
 }
