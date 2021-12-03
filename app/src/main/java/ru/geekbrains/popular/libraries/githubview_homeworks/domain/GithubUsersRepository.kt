@@ -8,7 +8,7 @@ class GithubUsersRepository {
         GithubUserModel("Софико Мила Юрьевна"),
         GithubUserModel("Васильев Ильнар Мазарович"),
         GithubUserModel("Гунар Кирилл Викторович"),
-        GithubUserModel("Мирзо Юусуп Алиевич"),
+        GithubUserModel("Мирзо Юсуп Алиевич"),
         GithubUserModel("Ким Илья Андреевич")
     )
 

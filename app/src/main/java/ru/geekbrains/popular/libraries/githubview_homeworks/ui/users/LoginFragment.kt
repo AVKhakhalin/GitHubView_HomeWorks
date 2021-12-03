@@ -24,7 +24,8 @@ class LoginFragment(
     private val presenter by moxyPresenter {
         UsersPresenter(
             App.instance.router,
-            GithubUsersRepository()
+            GithubUsersRepository(),
+            null
         )
     }
     // binding

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.geekbrains.popular.libraries.githubview_homeworks.App
@@ -23,7 +24,8 @@ class UsersFragment: MvpAppCompatFragment(), UsersView, BackButtonListener {
     private val presenter by moxyPresenter {
         UsersPresenter(
             App.instance.router,
-            GithubUsersRepository()
+            GithubUsersRepository(),
+            this@UsersFragment
         )
     }
     // binding
@@ -107,4 +109,10 @@ class UsersFragment: MvpAppCompatFragment(), UsersView, BackButtonListener {
         }.start()
     }
     //endregion
+
+    /** Получение адаптера */
+    @JvmName("getAdapter1")
+    fun getAdapter(): UsersAdapter {
+        return adapter
+    }
 }

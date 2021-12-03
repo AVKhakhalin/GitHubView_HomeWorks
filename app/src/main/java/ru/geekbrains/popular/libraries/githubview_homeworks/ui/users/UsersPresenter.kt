@@ -9,7 +9,8 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.IListPresent
 
 class UsersPresenter(
     private val router: Router,
-    private val usersRepository: GithubUsersRepository
+    private val usersRepository: GithubUsersRepository,
+    private val usersFragment: UsersFragment?
 ): MvpPresenter<UsersView>() {
 
     val usersListPresenter = UsersListPresenter()
@@ -28,9 +29,9 @@ class UsersPresenter(
 
     private fun loadData() {
         val users = usersRepository.getUsers()
-        usersListPresenter.users.addAll(users)
-
-        viewState.updateList()
+        usersFragment?.let {
+            it.getAdapter().submitList(users)
+        }
     }
 
     fun backPressed(): Boolean {

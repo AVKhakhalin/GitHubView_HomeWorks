@@ -2,8 +2,10 @@ package ru.geekbrains.popular.libraries.githubview_homeworks.ui.users.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.geekbrains.popular.libraries.githubview_homeworks.databinding.ItemUserBinding
+import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.users.UserItemView
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.users.UsersPresenter
 
@@ -36,4 +38,37 @@ class UsersAdapter(
             vb.tvLogin.text = login
         }
     }
+
+    /** Метод и класс для динамического обновления списка */ //region
+    fun submitList(newFavoriteData: List<GithubUserModel>) {
+        val oldFavoriteData: List<GithubUserModel> = presenter.users
+        val diffResult: DiffUtil.DiffResult =
+            DiffUtil.calculateDiff(DiffCallback(oldFavoriteData, newFavoriteData))
+        presenter.users.clear()
+        newFavoriteData.forEach {
+            presenter.users.add(it)
+        }
+        diffResult.dispatchUpdatesTo(this)
+    }
+    class DiffCallback(
+        var oldList: List<GithubUserModel>,
+        var newList: List<GithubUserModel>
+    ): DiffUtil.Callback() {
+        override fun getOldListSize(): Int {
+            return oldList.size
+        }
+
+        override fun getNewListSize(): Int {
+            return newList.size
+        }
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition] == newList[newItemPosition]
+        }
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition] == newList[newItemPosition]
+        }
+    }
+    //endregion
 }
