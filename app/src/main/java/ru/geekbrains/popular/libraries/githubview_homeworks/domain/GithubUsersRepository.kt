@@ -1,5 +1,6 @@
 package ru.geekbrains.popular.libraries.githubview_homeworks.domain
 
+import io.reactivex.rxjava3.core.Observable
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
 
 class GithubUsersRepository {
@@ -12,7 +13,7 @@ class GithubUsersRepository {
         GithubUserModel("Ким Илья Андреевич")
     )
 
-    fun getUsers(): List<GithubUserModel> {
-        return users
+    fun getUsers(): Observable<List<GithubUserModel>> {
+        return Observable.just(users)
     }
 }

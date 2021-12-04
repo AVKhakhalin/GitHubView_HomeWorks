@@ -1,7 +1,10 @@
 package ru.geekbrains.popular.libraries.githubview_homeworks.ui.users
 
+import android.util.Log
+import android.widget.Toast
 import com.github.terrakok.cicerone.Router
 import moxy.MvpPresenter
+import ru.geekbrains.popular.libraries.githubview_homeworks.R
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubUsersRepository
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.screens.AppScreens
@@ -14,23 +17,39 @@ class UsersPresenter(
 ): MvpPresenter<UsersView>() {
 
     val usersListPresenter = UsersListPresenter()
+    private var users: List<GithubUserModel> = listOf()
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
 
         loadData()
 
-        usersListPresenter.itemClickListener = { userItemView ->
-            router.navigateTo(AppScreens.loginScreen(
-                    usersRepository.getUsers()[userItemView.pos].login)
-            )
+        usersFragment?.let { usersFragment ->
+            usersListPresenter.itemClickListener = { userItemView ->
+                router.navigateTo(
+                    AppScreens.loginScreen(
+                        (if (userItemView.pos < users.size) users[userItemView.pos].login
+                        else usersFragment.resources.getString(R.string.error_not_user_name))
+                    )
+                )
+            }
         }
     }
 
     private fun loadData() {
-        val users = usersRepository.getUsers()
-        usersFragment?.let {
-            it.getAdapter().submitList(users)
+        usersFragment?.let { usersFragment ->
+            usersRepository.getUsers()
+                .subscribe(
+                    {
+                        users = it
+                        usersFragment.getAdapter().submitList(it)
+                    },
+                    {
+                        Toast.makeText(usersFragment.requireContext(), "${
+                            usersFragment.resources.getString(R.string.error_get_list_users)}$it",
+                            Toast.LENGTH_LONG).show()
+                    }
+                )
         }
     }
 
@@ -43,8 +62,7 @@ class UsersPresenter(
 
         val users = mutableListOf<GithubUserModel>()
 
-        override var itemClickListener: (UserItemView) -> Unit = {
-        }
+        override var itemClickListener: (UserItemView) -> Unit = {}
 
         override fun getCount() = users.size
 
