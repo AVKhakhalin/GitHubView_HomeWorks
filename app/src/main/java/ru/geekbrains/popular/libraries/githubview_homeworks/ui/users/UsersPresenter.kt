@@ -3,6 +3,7 @@ package ru.geekbrains.popular.libraries.githubview_homeworks.ui.users
 import android.util.Log
 import android.widget.Toast
 import com.github.terrakok.cicerone.Router
+import io.reactivex.rxjava3.core.Observable
 import moxy.MvpPresenter
 import ru.geekbrains.popular.libraries.githubview_homeworks.R
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubUsersRepository
@@ -39,6 +40,8 @@ class UsersPresenter(
     private fun loadData() {
         usersFragment?.let { usersFragment ->
             usersRepository.getUsers()
+                .switchMap {
+                    return@switchMap Observable.just( it )}
                 .subscribe(
                     {
                         users = it

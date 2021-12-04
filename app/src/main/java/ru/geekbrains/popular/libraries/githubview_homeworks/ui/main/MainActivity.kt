@@ -7,6 +7,7 @@ import moxy.ktx.moxyPresenter
 import ru.geekbrains.popular.libraries.githubview_homeworks.App
 import ru.geekbrains.popular.libraries.githubview_homeworks.R
 import ru.geekbrains.popular.libraries.githubview_homeworks.databinding.ActivityMainBinding
+import ru.geekbrains.popular.libraries.githubview_homeworks.switchmap.Producer
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
 
 class MainActivity: MvpAppCompatActivity(), MainView {
@@ -25,6 +26,8 @@ class MainActivity: MvpAppCompatActivity(), MainView {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        Producer().execFlatMap()
     }
 
 
