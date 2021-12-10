@@ -1,6 +1,5 @@
 package ru.geekbrains.popular.libraries.githubview_homeworks.ui.users
 
-import android.util.Log
 import android.widget.Toast
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.core.Observable
