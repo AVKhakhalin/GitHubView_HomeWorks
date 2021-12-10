@@ -1,8 +1,9 @@
 package ru.geekbrains.popular.libraries.githubview_homeworks.ui.users
 
-import android.widget.Toast
+import android.util.Log
 import com.github.terrakok.cicerone.Router
-import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpPresenter
 import ru.geekbrains.popular.libraries.githubview_homeworks.R
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubUsersRepository
@@ -37,22 +38,48 @@ class UsersPresenter(
     }
 
     private fun loadData() {
-        usersFragment?.let { usersFragment ->
-            usersRepository.getUsers()
-                .switchMap {
-                    return@switchMap Observable.just( it )}
-                .subscribe(
-                    {
-                        users = it
-                        usersFragment.getAdapter().submitList(it)
-                    },
-                    {
-                        Toast.makeText(usersFragment.requireContext(), "${
-                            usersFragment.resources.getString(R.string.error_get_list_users)}$it",
-                            Toast.LENGTH_LONG).show()
-                    }
-                )
-        }
+//        usersFragment?.let { usersFragment ->
+//            usersRepository.getUsers()
+//                .switchMap {
+//                    return@switchMap Observable.just( it )}
+//                .subscribe(
+//                    {
+//                        users = it
+//                        usersFragment.getAdapter().submitList(it)
+//                    },
+//                    {
+//                        Toast.makeText(usersFragment.requireContext(), "${
+//                            usersFragment.resources.getString(R.string.error_get_list_users)}$it",
+//                            Toast.LENGTH_LONG).show()
+//                    }
+//                )
+//        }
+
+//        usersFragment?.let { usersFragment ->
+//            val service = ApiHolder.retrofitService
+//            service.getUsers()
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe { users: List<GithubUserModel> ->
+//                   Toast.makeText(usersFragment.requireContext(), "Первый пользователь: ${
+//                       users.firstOrNull()?.login}", Toast.LENGTH_LONG).show()
+//                    Log.d("mylogs", "Первый пользователь: ${users.firstOrNull()?.login}")
+//                }
+//        }
+
+        usersRepository.getUsers()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { /** viewState.showLoading() */ }
+            .subscribe(
+                { users ->
+                    viewState.updateList(users)
+                    /** viewState.hideLoading() */
+                }, { e ->
+                    Log.e("mylogs", "Ошибка при получении пользователей", e)
+                    /** viewState.hideLoading() */
+                }
+            )
     }
 
     fun backPressed(): Boolean {

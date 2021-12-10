@@ -8,7 +8,9 @@ import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.geekbrains.popular.libraries.githubview_homeworks.App
 import ru.geekbrains.popular.libraries.githubview_homeworks.databinding.FragmentLoginBinding
-import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubUsersRepository
+import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubUsersRepositoryImpl
+import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
+import ru.geekbrains.popular.libraries.githubview_homeworks.remote.ApiHolder
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.users.adapter.UsersAdapter
 
@@ -20,7 +22,8 @@ class LoginFragment(
     private val presenter by moxyPresenter {
         UsersPresenter(
             App.instance.router,
-            GithubUsersRepository(),
+//            GithubUsersRepository(),
+            GithubUsersRepositoryImpl(ApiHolder.retrofitService),
             null
         )
     }
@@ -53,8 +56,16 @@ class LoginFragment(
         binding.userLogin.text = login
     }
 
-    override fun updateList() {
-        adapter.notifyDataSetChanged()
+    override fun updateList(users: List<GithubUserModel>) {
+        adapter.submitList(users)
+    }
+
+    fun showLoading() {
+//        TODO("Not yet implemented")
+    }
+
+    fun hideLoading() {
+//        TODO("Not yet implemented")
     }
 
     override fun backPressed(): Boolean {

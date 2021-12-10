@@ -9,7 +9,9 @@ import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.geekbrains.popular.libraries.githubview_homeworks.App
 import ru.geekbrains.popular.libraries.githubview_homeworks.databinding.FragmentUsersBinding
-import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubUsersRepository
+import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubUsersRepositoryImpl
+import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
+import ru.geekbrains.popular.libraries.githubview_homeworks.remote.ApiHolder
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.users.adapter.UsersAdapter
 
@@ -19,7 +21,8 @@ class UsersFragment: MvpAppCompatFragment(), UsersView, BackButtonListener {
     private val presenter by moxyPresenter {
         UsersPresenter(
             App.instance.router,
-            GithubUsersRepository(),
+            GithubUsersRepositoryImpl(ApiHolder.retrofitService),
+//            GithubUsersRepository(),
             this@UsersFragment
         )
     }
@@ -53,8 +56,18 @@ class UsersFragment: MvpAppCompatFragment(), UsersView, BackButtonListener {
         binding.usersListRecycler.adapter = adapter
     }
 
-    override fun updateList() {
-        adapter.notifyDataSetChanged()
+//    fun showLoading() {
+//        binding.loadingView.visibility = View.VISIBLE
+//        binding.usersListRecycler.visibility = View.GONE
+//    }
+//
+//    fun hideLoading() {
+//        binding.loadingView.visibility = View.INVISIBLE
+//        binding.usersListRecycler.visibility = View.VISIBLE
+//    }
+
+    override fun updateList(users: List<GithubUserModel>) {
+        adapter.submitList(users)
     }
 
     override fun backPressed(): Boolean {
