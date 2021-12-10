@@ -9,9 +9,9 @@ interface UsersView: MvpView {
     @AddToEndSingle
     fun updateList(users: List<GithubUserModel>)
 
-//    @AddToEndSingle
-//    fun showLoading()
-//
-//    @AddToEndSingle
-//    fun hideLoading()
+    @AddToEndSingle
+    fun showLoading()
+
+    @AddToEndSingle
+    fun hideLoading()
 }

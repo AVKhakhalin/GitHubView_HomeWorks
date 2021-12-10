@@ -14,15 +14,15 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserMode
 import ru.geekbrains.popular.libraries.githubview_homeworks.remote.ApiHolder
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.users.adapter.UsersAdapter
+import ru.geekbrains.popular.libraries.githubview_homeworks.ui.utils.GlideImageLoader
 
 class UsersFragment: MvpAppCompatFragment(), UsersView, BackButtonListener {
 
     /** Задание переменных */ //region
-    private val presenter by moxyPresenter {
+    val presenter by moxyPresenter {
         UsersPresenter(
             App.instance.router,
             GithubUsersRepositoryImpl(ApiHolder.retrofitService),
-//            GithubUsersRepository(),
             this@UsersFragment
         )
     }
@@ -32,7 +32,9 @@ class UsersFragment: MvpAppCompatFragment(), UsersView, BackButtonListener {
         get() = _binding!!
     // adapter
     private val adapter by lazy {
-        UsersAdapter(presenter.usersListPresenter)
+//        UsersAdapter(presenter.usersListPresenter)
+        UsersAdapter(presenter.usersListPresenter,
+        GlideImageLoader())
     }
     //endregion
 
@@ -56,15 +58,15 @@ class UsersFragment: MvpAppCompatFragment(), UsersView, BackButtonListener {
         binding.usersListRecycler.adapter = adapter
     }
 
-//    fun showLoading() {
-//        binding.loadingView.visibility = View.VISIBLE
-//        binding.usersListRecycler.visibility = View.GONE
-//    }
-//
-//    fun hideLoading() {
-//        binding.loadingView.visibility = View.INVISIBLE
-//        binding.usersListRecycler.visibility = View.VISIBLE
-//    }
+    override fun showLoading() {
+        binding.loadingView.visibility = View.VISIBLE
+        binding.usersListRecycler.visibility = View.GONE
+    }
+
+    override fun hideLoading() {
+        binding.loadingView.visibility = View.INVISIBLE
+        binding.usersListRecycler.visibility = View.VISIBLE
+    }
 
     override fun updateList(users: List<GithubUserModel>) {
         adapter.submitList(users)

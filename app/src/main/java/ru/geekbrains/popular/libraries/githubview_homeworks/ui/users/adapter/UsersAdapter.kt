@@ -2,15 +2,18 @@ package ru.geekbrains.popular.libraries.githubview_homeworks.ui.users.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.geekbrains.popular.libraries.githubview_homeworks.databinding.ItemUserBinding
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.users.UserItemView
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.users.UsersPresenter
+import ru.geekbrains.popular.libraries.githubview_homeworks.ui.utils.ImageLoader
 
 class UsersAdapter(
-    private val presenter: UsersPresenter.UsersListPresenter
+    private val presenter: UsersPresenter.UsersListPresenter,
+    private val imageLoader: ImageLoader<ImageView>
 ): RecyclerView.Adapter<UsersAdapter.UserViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
@@ -36,6 +39,10 @@ class UsersAdapter(
 
         override fun setLogin(login: String) {
             vb.tvLogin.text = login
+        }
+
+        override fun setAvatar(avatarUrl: String) {
+            imageLoader.loadInto(avatarUrl, vb.userImage)
         }
     }
 

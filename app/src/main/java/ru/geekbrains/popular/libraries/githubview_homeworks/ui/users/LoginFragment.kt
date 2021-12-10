@@ -5,40 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import moxy.MvpAppCompatFragment
-import moxy.ktx.moxyPresenter
-import ru.geekbrains.popular.libraries.githubview_homeworks.App
 import ru.geekbrains.popular.libraries.githubview_homeworks.databinding.FragmentLoginBinding
-import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubUsersRepositoryImpl
-import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
-import ru.geekbrains.popular.libraries.githubview_homeworks.remote.ApiHolder
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
-import ru.geekbrains.popular.libraries.githubview_homeworks.ui.users.adapter.UsersAdapter
 
 class LoginFragment(
-    private val login: String
-): MvpAppCompatFragment(), UsersView, BackButtonListener {
+    private val login: String,
+    private val presenter: UsersPresenter
+): MvpAppCompatFragment(), BackButtonListener {
 
-    /** Задание переменных */ //region
-    private val presenter by moxyPresenter {
-        UsersPresenter(
-            App.instance.router,
-//            GithubUsersRepository(),
-            GithubUsersRepositoryImpl(ApiHolder.retrofitService),
-            null
-        )
-    }
     // binding
     private var _binding: FragmentLoginBinding? = null
     private val binding
         get() = _binding!!
-    // adapter
-    private val adapter by lazy {
-        UsersAdapter(presenter.usersListPresenter)
-    }
     //endregion
 
     companion object {
-        fun newInstance(login: String) = LoginFragment(login)
+        fun newInstance(login: String, presenter: UsersPresenter) = LoginFragment(login, presenter)
     }
 
     override fun onCreateView(
@@ -54,18 +36,6 @@ class LoginFragment(
         super.onViewCreated(view, savedInstanceState)
         /** Установка отображение логина пользователя */
         binding.userLogin.text = login
-    }
-
-    override fun updateList(users: List<GithubUserModel>) {
-        adapter.submitList(users)
-    }
-
-    fun showLoading() {
-//        TODO("Not yet implemented")
-    }
-
-    fun hideLoading() {
-//        TODO("Not yet implemented")
     }
 
     override fun backPressed(): Boolean {

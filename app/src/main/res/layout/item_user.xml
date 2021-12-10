@@ -3,10 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_layout"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/item_layout_height"
+    android:layout_height="wrap_content"
     android:foreground="?attr/selectableItemBackground"
     android:gravity="center_vertical"
-    android:orientation="horizontal" >
+    android:orientation="horizontal"
+    android:padding="@dimen/item_user_padding">
+
+    <ImageView
+        android:id="@+id/user_image"
+        android:layout_width="@dimen/user_image_width"
+        android:layout_height="@dimen/user_image_height"
+        tools:src="@color/black" />
 
     <TextView
         android:id="@+id/tv_login"
