@@ -19,7 +19,7 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.ui.utils.GlideImageL
 class UsersFragment: MvpAppCompatFragment(), UsersView, BackButtonListener {
 
     /** Задание переменных */ //region
-    val presenter by moxyPresenter {
+    private val presenter by moxyPresenter {
         UsersPresenter(
             App.instance.router,
             GithubUsersRepositoryImpl(ApiHolder.retrofitService),
@@ -79,11 +79,5 @@ class UsersFragment: MvpAppCompatFragment(), UsersView, BackButtonListener {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-    }
-
-    /** Получение адаптера */
-    @JvmName("getAdapter1")
-    fun getAdapter(): UsersAdapter {
-        return adapter
     }
 }

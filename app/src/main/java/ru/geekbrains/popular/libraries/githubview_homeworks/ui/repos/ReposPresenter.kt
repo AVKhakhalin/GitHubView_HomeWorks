@@ -8,6 +8,7 @@ import moxy.MvpPresenter
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubRepoRepository
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubRepoModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
+import ru.geekbrains.popular.libraries.githubview_homeworks.screens.AppScreens
 
 class ReposPresenter(
     private val userModel: GithubUserModel,
@@ -40,6 +41,10 @@ class ReposPresenter(
     fun onRepoClicked(repo: GithubRepoModel) {
         // todo
         Log.d("mylogs", "${repo.forksCount}")
+        router.navigateTo(
+            AppScreens.forksScreen(userModel, repoModel = repo, this@ReposPresenter)
+        )
+
     }
 
     fun backPressed(): Boolean {

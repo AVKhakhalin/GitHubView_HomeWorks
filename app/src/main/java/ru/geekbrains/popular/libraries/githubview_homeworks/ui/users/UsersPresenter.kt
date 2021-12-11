@@ -1,12 +1,10 @@
 package ru.geekbrains.popular.libraries.githubview_homeworks.ui.users
 
 import android.util.Log
-import android.widget.Toast
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpPresenter
-import ru.geekbrains.popular.libraries.githubview_homeworks.R
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubUsersRepository
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.screens.AppScreens
@@ -28,13 +26,7 @@ class UsersPresenter(
 
         usersFragment?.let { usersFragment ->
             usersListPresenter.itemClickListener = { userItemView ->
-                Toast.makeText(usersFragment.requireContext(), "${userItemView.pos} ? ${users.size}", Toast.LENGTH_LONG).show()
                 router.navigateTo(
-//                    AppScreens.loginScreen(
-//                        (if (userItemView.pos < users.size) users[userItemView.pos].login
-//                        else usersFragment.resources.getString(R.string.error_not_user_name)),
-//                        usersFragment.presenter
-//                    )
                     AppScreens.repoScreen(userModel = GithubUserModel(users[userItemView.pos].login,
                         users[userItemView.pos].avatarUrl, users[userItemView.pos].reposUrl))
                 )

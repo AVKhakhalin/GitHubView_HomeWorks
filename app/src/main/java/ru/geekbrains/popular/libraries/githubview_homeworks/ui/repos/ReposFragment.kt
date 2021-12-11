@@ -1,5 +1,6 @@
 package ru.geekbrains.popular.libraries.githubview_homeworks.ui.repos
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,15 +17,13 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.remote.ApiHolder
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
 
 class ReposFragment(
-    private var userModel: GithubUserModel
+    private val userModel: GithubUserModel
 ): MvpAppCompatFragment(), ReposView, BackButtonListener {
     private val presenter by moxyPresenter {
         ReposPresenter(
             router = App.instance.router,
             userModel = userModel,
-            repo = GithubRepoRepositoryImpl(
-                retrofitService = ApiHolder.retrofitService,
-            )
+            repo = GithubRepoRepositoryImpl(retrofitService = ApiHolder.retrofitService)
         )
     }
 
@@ -36,18 +35,17 @@ class ReposFragment(
         ReposAdapter { presenter.onRepoClicked(it) }
     }
 
-    companion object {
-        fun newInstance(userModel: GithubUserModel) = ReposFragment(userModel)
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentReposBinding.inflate(inflater, container, false)
         return binding.root
+
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.reposTitle.text = "Список репозиториев\nпользователя \"${userModel.login}\":"
         binding.reposRecycler.layoutManager = LinearLayoutManager(requireContext())
         binding.reposRecycler.adapter = adapter
     }
@@ -67,5 +65,9 @@ class ReposFragment(
     override fun backPressed(): Boolean {
         presenter.backPressed()
         return true
+    }
+
+    companion object {
+        fun newInstance(userModel: GithubUserModel) = ReposFragment(userModel)
     }
 }

@@ -1,6 +1,7 @@
 package ru.geekbrains.popular.libraries.githubview_homeworks.model
 
 import com.google.gson.annotations.Expose
+import java.io.Serializable
 
 data class GithubRepoModel(
     @Expose
@@ -11,9 +12,9 @@ data class GithubRepoModel(
     val owner: GithubRepoOwner,
     @Expose
     val forksCount: Int
-)
+): Serializable
 
 data class GithubRepoOwner(
     @Expose
     val id: String
-)
+): Serializable
