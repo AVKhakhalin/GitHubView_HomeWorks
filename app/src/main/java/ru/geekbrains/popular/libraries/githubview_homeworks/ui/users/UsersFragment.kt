@@ -32,7 +32,6 @@ class UsersFragment: MvpAppCompatFragment(), UsersView, BackButtonListener {
         get() = _binding!!
     // adapter
     private val adapter by lazy {
-//        UsersAdapter(presenter.usersListPresenter)
         UsersAdapter(presenter.usersListPresenter,
         GlideImageLoader())
     }

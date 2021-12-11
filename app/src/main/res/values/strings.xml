@@ -6,4 +6,5 @@
     <!-- Ошибки -->
     <string name="error_get_list_users">Ошибка при получении списка пользователей: </string>
     <string name="error_not_user_name">Ошибка: Нет запрошенного пользователя в списке.</string>
+    <string name="tv_repo_name_tools_text">Имя репозитория</string>
 </resources>

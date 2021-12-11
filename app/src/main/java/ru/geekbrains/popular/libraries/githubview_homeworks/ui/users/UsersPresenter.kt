@@ -30,11 +30,13 @@ class UsersPresenter(
             usersListPresenter.itemClickListener = { userItemView ->
                 Toast.makeText(usersFragment.requireContext(), "${userItemView.pos} ? ${users.size}", Toast.LENGTH_LONG).show()
                 router.navigateTo(
-                    AppScreens.loginScreen(
-                        (if (userItemView.pos < users.size) users[userItemView.pos].login
-                        else usersFragment.resources.getString(R.string.error_not_user_name)),
-                        usersFragment.presenter
-                    )
+//                    AppScreens.loginScreen(
+//                        (if (userItemView.pos < users.size) users[userItemView.pos].login
+//                        else usersFragment.resources.getString(R.string.error_not_user_name)),
+//                        usersFragment.presenter
+//                    )
+                    AppScreens.repoScreen(userModel = GithubUserModel(users[userItemView.pos].login,
+                        users[userItemView.pos].avatarUrl, users[userItemView.pos].reposUrl))
                 )
             }
         }

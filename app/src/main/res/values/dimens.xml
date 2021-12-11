@@ -7,4 +7,8 @@
     <dimen name="user_image_width">64dp</dimen>
     <dimen name="user_image_height">64dp</dimen>
     <dimen name="item_user_padding">8dp</dimen>
+    <dimen name="loading_view_width">100dp</dimen>
+    <dimen name="loading_view_height">100dp</dimen>
+    <dimen name="tv_repo_name_margin_start">8dp</dimen>
+    <dimen name="item_repo_padding">8dp</dimen>
 </resources>
