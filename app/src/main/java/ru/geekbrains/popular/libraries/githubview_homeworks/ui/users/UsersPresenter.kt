@@ -29,8 +29,11 @@ class UsersPresenter(
 
         usersFragment?.let { usersFragment ->
             usersListPresenter.itemClickListener = { userItemView ->
-                val userModel: GithubUserModel = GithubUserModel(users[userItemView.pos].login,
-                    users[userItemView.pos].avatarUrl, users[userItemView.pos].reposUrl)
+                val userModel: GithubUserModel = GithubUserModel(
+                    users[userItemView.pos].id,
+                    users[userItemView.pos].login,
+                    users[userItemView.pos].avatarUrl,
+                    users[userItemView.pos].reposUrl)
                 usersFragment.getMainActivity()?.let { mainActivity ->
                     mainActivity.setGithubUserModel(userModel)
                     mainActivity.setUsersModel(users)

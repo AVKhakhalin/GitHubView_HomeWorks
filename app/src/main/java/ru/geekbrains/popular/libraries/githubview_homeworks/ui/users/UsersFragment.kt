@@ -11,9 +11,11 @@ import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.geekbrains.popular.libraries.githubview_homeworks.App
 import ru.geekbrains.popular.libraries.githubview_homeworks.databinding.FragmentUsersBinding
+import ru.geekbrains.popular.libraries.githubview_homeworks.db.AppDatabase
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubUsersRepositoryImpl
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.remote.ApiHolder
+import ru.geekbrains.popular.libraries.githubview_homeworks.remote.connectivity.NetworkStatus
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.main.MainActivity
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.users.adapter.UsersAdapter
@@ -21,11 +23,17 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.ui.utils.GlideImageL
 
 class UsersFragment: MvpAppCompatFragment(), UsersView, BackButtonListener {
 
+    private val status by lazy { NetworkStatus(requireContext().applicationContext) }
+
     /** Задание переменных */ //region
     private val presenter by moxyPresenter {
         UsersPresenter(
             App.instance.router,
-            GithubUsersRepositoryImpl(ApiHolder.retrofitService),
+            GithubUsersRepositoryImpl(
+                networkStatus = status,
+                retrofitService = ApiHolder.retrofitService,
+                db = AppDatabase.instance,
+            ),
             this@UsersFragment
         )
     }

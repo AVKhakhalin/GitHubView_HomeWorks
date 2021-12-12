@@ -27,7 +27,8 @@ class MainActivity: MvpAppCompatActivity(), MainView {
     // moxyPresenter
     private val presenter by moxyPresenter { MainPresenter(App.instance.router) }
     // githubUserModel
-    private var githubUserModel: GithubUserModel = GithubUserModel("", "", "")
+    private var githubUserModel: GithubUserModel =
+        GithubUserModel("", "", "", "")
     private var users: List<GithubUserModel> = listOf()
     // githubRepoModel
     private var githubRepoModel: GithubRepoModel =
@@ -122,6 +123,7 @@ class MainActivity: MvpAppCompatActivity(), MainView {
         super.onRestoreInstanceState(savedInstanceState)
 
         githubUserModel = GithubUserModel(
+            savedInstanceState.getString("USER_MODEL_ID") ?: "",
             savedInstanceState.getString("USER_MODEL_LOGIN") ?: "",
             savedInstanceState.getString("USER_MODEL_AVATARURL") ?: "",
             savedInstanceState.getString("USER_MODEL_REPOSURL") ?: ""
@@ -134,6 +136,7 @@ class MainActivity: MvpAppCompatActivity(), MainView {
             repeat(numberUsers) { index ->
                 newUsers.add(
                     GithubUserModel(
+                        savedInstanceState.getString("USER_MODEL_${index}_ID") ?: "",
                         savedInstanceState.getString("USER_MODEL_${index}_LOGIN") ?: "",
                         savedInstanceState.getString("USER_MODEL_${index}_AVATARURL")
                             ?: "",
