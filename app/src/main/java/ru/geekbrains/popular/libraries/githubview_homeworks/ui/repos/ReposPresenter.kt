@@ -11,10 +11,14 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserMode
 import ru.geekbrains.popular.libraries.githubview_homeworks.screens.AppScreens
 
 class ReposPresenter(
-    private val userModel: GithubUserModel,
     private val router: Router,
     private val repo: GithubRepoRepository,
-) : MvpPresenter<ReposView>() {
+    private val reposFragment: ReposFragment
+): MvpPresenter<ReposView>() {
+    /** ИСХОДНЫЕ ДАННЫЕ */ //region
+    // userModel
+    private var userModel: GithubUserModel? = null
+    //endregion
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -23,32 +27,40 @@ class ReposPresenter(
     }
 
     private fun loadData() {
-        repo.getRepos(userModel)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { viewState.showLoading() }
-            .subscribe(
-                { repos ->
-                    viewState.showRepos(repos)
-                    viewState.hideLoading()
-                }, {
-                    Log.e(this::class.java.simpleName, "Ошибка при получении репозиториев", it)
-                    viewState.hideLoading()
-                }
-            )
+        reposFragment.getMainActivity()?.let { mainActivity ->
+            val userModel: GithubUserModel = mainActivity.getGithubUserModel()
+            userModel?.let { userModel ->
+                repo.getRepos(userModel)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnSubscribe { viewState.showLoading() }
+                    .subscribe(
+                        { repos ->
+                            viewState.showRepos(repos)
+                            viewState.hideLoading()
+                            mainActivity.setReposModel(repos)
+                        }, {
+                            Log.e("mylogs",
+                                "Ошибка при получении репозиториев",
+                                it
+                            )
+                            viewState.hideLoading()
+                        }
+                    )
+            }
+        }
     }
 
     fun onRepoClicked(repo: GithubRepoModel) {
-        // todo
-        Log.d("mylogs", "${repo.forksCount}")
-        router.navigateTo(
-            AppScreens.forksScreen(userModel, repoModel = repo, this@ReposPresenter)
-        )
-
+        reposFragment.getMainActivity()?.let { mainActivity ->
+            mainActivity.setGithubRepoModel(repo)
+        }
+        router.navigateTo(AppScreens.forksScreen())
     }
 
     fun backPressed(): Boolean {
         router.exit()
         return true
     }
+
 }

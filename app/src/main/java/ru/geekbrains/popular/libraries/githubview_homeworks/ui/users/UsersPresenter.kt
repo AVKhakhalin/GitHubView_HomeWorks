@@ -15,9 +15,12 @@ class UsersPresenter(
     private val usersRepository: GithubUsersRepository,
     private val usersFragment: UsersFragment?
 ): MvpPresenter<UsersView>() {
-
-    val usersListPresenter = UsersListPresenter()
+    /** ИСХОДНЫЕ ДАННЫЕ */ //region
+    // users
     private var users: List<GithubUserModel> = listOf()
+    // usersListPresenter
+    val usersListPresenter = UsersListPresenter()
+    //endregion
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -26,15 +29,18 @@ class UsersPresenter(
 
         usersFragment?.let { usersFragment ->
             usersListPresenter.itemClickListener = { userItemView ->
-                router.navigateTo(
-                    AppScreens.repoScreen(userModel = GithubUserModel(users[userItemView.pos].login,
-                        users[userItemView.pos].avatarUrl, users[userItemView.pos].reposUrl))
-                )
+                val userModel: GithubUserModel = GithubUserModel(users[userItemView.pos].login,
+                    users[userItemView.pos].avatarUrl, users[userItemView.pos].reposUrl)
+                usersFragment.getMainActivity()?.let { mainActivity ->
+                    mainActivity.setGithubUserModel(userModel)
+                    mainActivity.setUsersModel(users)
+                }
+                router.navigateTo(AppScreens.repoScreen())
             }
         }
     }
 
-    private fun loadData() {
+    fun loadData() {
         usersRepository.getUsers()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -42,6 +48,11 @@ class UsersPresenter(
             .subscribe(
                 { users ->
                     this.users = users
+                    usersFragment?.let { usersFragment ->
+                        usersFragment.getMainActivity()?.let { mainActivity ->
+                            mainActivity.setUsersModel(users)
+                        }
+                    }
                     viewState.updateList(users)
                     viewState.hideLoading()
                 }, { e ->
@@ -56,9 +67,9 @@ class UsersPresenter(
         return true
     }
 
-    class UsersListPresenter: IListPresenter<UserItemView> {
+    class UsersListPresenter(): IListPresenter<UserItemView> {
 
-        val users = mutableListOf<GithubUserModel>()
+        var users: MutableList<GithubUserModel> = mutableListOf<GithubUserModel>()
 
         override var itemClickListener: (UserItemView) -> Unit = {}
 
@@ -69,5 +80,9 @@ class UsersPresenter(
             view.setLogin(user.login)
             view.setAvatar(user.avatarUrl)
         }
+    }
+
+    fun setUsers(users: List<GithubUserModel>) {
+        this.users = users
     }
 }

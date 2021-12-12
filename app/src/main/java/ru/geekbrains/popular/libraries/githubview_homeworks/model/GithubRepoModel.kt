@@ -1,8 +1,10 @@
 package ru.geekbrains.popular.libraries.githubview_homeworks.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.Expose
-import java.io.Serializable
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class GithubRepoModel(
     @Expose
     val id: String,
@@ -12,9 +14,10 @@ data class GithubRepoModel(
     val owner: GithubRepoOwner,
     @Expose
     val forksCount: Int
-): Serializable
+): Parcelable
 
+@Parcelize
 data class GithubRepoOwner(
     @Expose
     val id: String
-): Serializable
+): Parcelable

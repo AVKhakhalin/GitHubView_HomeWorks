@@ -1,6 +1,7 @@
 package ru.geekbrains.popular.libraries.githubview_homeworks.ui.repos
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,24 +16,33 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubRepoMode
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.remote.ApiHolder
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
+import ru.geekbrains.popular.libraries.githubview_homeworks.ui.main.MainActivity
 
-class ReposFragment(
-    private val userModel: GithubUserModel
-): MvpAppCompatFragment(), ReposView, BackButtonListener {
+class ReposFragment: MvpAppCompatFragment(), ReposView, BackButtonListener {
+    /** ЗАДАНИЕ ПЕРЕМЕННЫХ */ //region
+    // presenter
     private val presenter by moxyPresenter {
         ReposPresenter(
             router = App.instance.router,
-            userModel = userModel,
-            repo = GithubRepoRepositoryImpl(retrofitService = ApiHolder.retrofitService)
+            repo = GithubRepoRepositoryImpl(retrofitService = ApiHolder.retrofitService),
+            this@ReposFragment
         )
     }
-
+    // binding
     private var _binding: FragmentReposBinding? = null
     private val binding
         get() = _binding!!
-
+    // adapter
     private val adapter by lazy {
         ReposAdapter { presenter.onRepoClicked(it) }
+    }
+    // mainActivity
+    private var mainActivity: MainActivity? = null
+    //endregion
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mainActivity = (context as MainActivity)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -45,7 +55,11 @@ class ReposFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.reposTitle.text = "Список репозиториев\nпользователя \"${userModel.login}\":"
+        mainActivity?.let { mainActivity ->
+            mainActivity.getGithubUserModel()?.let { userModel ->
+                binding.reposTitle.text = "Список репозиториев\nпользователя \"${userModel.login}\":"
+            }
+        }
         binding.reposRecycler.layoutManager = LinearLayoutManager(requireContext())
         binding.reposRecycler.adapter = adapter
     }
@@ -68,6 +82,22 @@ class ReposFragment(
     }
 
     companion object {
-        fun newInstance(userModel: GithubUserModel) = ReposFragment(userModel)
+        fun newInstance() = ReposFragment()
+    }
+
+    fun getMainActivity(): MainActivity? {
+        return mainActivity
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        mainActivity?.let { mainActivity ->
+            mainActivity.getGithubUserModel()?.let { userModel ->
+                binding.reposTitle.text = "Список репозиториев\nпользователя \"${userModel.login}\":"
+            }
+        }
+        binding.reposRecycler.layoutManager = LinearLayoutManager(requireContext())
+        binding.reposRecycler.adapter = adapter
     }
 }
