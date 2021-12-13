@@ -13,8 +13,8 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.App
 import ru.geekbrains.popular.libraries.githubview_homeworks.databinding.FragmentReposBinding
 import ru.geekbrains.popular.libraries.githubview_homeworks.db.AppDatabase
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubRepoRepositoryImpl
+import ru.geekbrains.popular.libraries.githubview_homeworks.domain.cache.RoomGithubRepositoriesCache
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubRepoModel
-import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.remote.ApiHolder
 import ru.geekbrains.popular.libraries.githubview_homeworks.remote.connectivity.NetworkStatus
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
@@ -27,9 +27,10 @@ class ReposFragment: MvpAppCompatFragment(), ReposView, BackButtonListener {
         ReposPresenter(
             router = App.instance.router,
             repo = GithubRepoRepositoryImpl(
-                networkStatus = NetworkStatus(requireContext()),
-                retrofitService = ApiHolder.retrofitService,
-                db = AppDatabase.instance
+                RoomGithubRepositoriesCache(NetworkStatus(requireContext())),
+//                networkStatus = NetworkStatus(requireContext()),
+//                retrofitService = ApiHolder.retrofitService,
+//                db = AppDatabase.instance
             ),
             this@ReposFragment
         )

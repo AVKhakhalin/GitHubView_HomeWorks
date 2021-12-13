@@ -13,6 +13,7 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.App
 import ru.geekbrains.popular.libraries.githubview_homeworks.databinding.FragmentUsersBinding
 import ru.geekbrains.popular.libraries.githubview_homeworks.db.AppDatabase
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubUsersRepositoryImpl
+import ru.geekbrains.popular.libraries.githubview_homeworks.domain.cache.RoomGithubUsersCache
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.remote.ApiHolder
 import ru.geekbrains.popular.libraries.githubview_homeworks.remote.connectivity.NetworkStatus
@@ -30,9 +31,10 @@ class UsersFragment: MvpAppCompatFragment(), UsersView, BackButtonListener {
         UsersPresenter(
             App.instance.router,
             GithubUsersRepositoryImpl(
-                networkStatus = status,
-                retrofitService = ApiHolder.retrofitService,
-                db = AppDatabase.instance,
+                RoomGithubUsersCache(status)
+//                networkStatus = status,
+//                retrofitService = ApiHolder.retrofitService,
+//                db = AppDatabase.instance,
             ),
             this@UsersFragment
         )
