@@ -1,6 +1,7 @@
 package ru.geekbrains.popular.libraries.githubview_homeworks.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.versionedparcelable.ParcelField
 import com.github.terrakok.cicerone.androidx.AppNavigator
@@ -42,6 +43,9 @@ class MainActivity: MvpAppCompatActivity(), MainView {
         setContentView(binding.root)
 
         Producer().execFlatMap()
+
+        /** Получение разрешений на запись информации */
+        presenter.isStoragePermissionGranted(this@MainActivity)
     }
 
     override fun onResumeFragments() {
@@ -173,5 +177,10 @@ class MainActivity: MvpAppCompatActivity(), MainView {
             }
             repos = newRepos
         }
+    }
+
+    fun showMessage(message: String) {
+        Toast.makeText(this@MainActivity, "$message", Toast.LENGTH_LONG).show()
+        Log.d("mylogs", "$message")
     }
 }

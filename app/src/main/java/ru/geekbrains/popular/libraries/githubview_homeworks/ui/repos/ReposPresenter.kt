@@ -15,10 +15,6 @@ class ReposPresenter(
     private val repo: GithubRepoRepository,
     private val reposFragment: ReposFragment
 ): MvpPresenter<ReposView>() {
-    /** ИСХОДНЫЕ ДАННЫЕ */ //region
-    // userModel
-    private var userModel: GithubUserModel? = null
-    //endregion
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()

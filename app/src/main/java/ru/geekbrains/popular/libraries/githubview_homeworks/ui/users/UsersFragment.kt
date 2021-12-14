@@ -5,17 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.geekbrains.popular.libraries.githubview_homeworks.App
 import ru.geekbrains.popular.libraries.githubview_homeworks.databinding.FragmentUsersBinding
-import ru.geekbrains.popular.libraries.githubview_homeworks.db.AppDatabase
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubUsersRepositoryImpl
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.cache.RoomGithubUsersCache
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
-import ru.geekbrains.popular.libraries.githubview_homeworks.remote.ApiHolder
 import ru.geekbrains.popular.libraries.githubview_homeworks.remote.connectivity.NetworkStatus
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.main.MainActivity
@@ -31,12 +28,10 @@ class UsersFragment: MvpAppCompatFragment(), UsersView, BackButtonListener {
         UsersPresenter(
             App.instance.router,
             GithubUsersRepositoryImpl(
-                RoomGithubUsersCache(status)
-//                networkStatus = status,
-//                retrofitService = ApiHolder.retrofitService,
-//                db = AppDatabase.instance,
+                RoomGithubUsersCache(status),
             ),
-            this@UsersFragment
+            this@UsersFragment,
+            status
         )
     }
     // binding
@@ -112,8 +107,11 @@ class UsersFragment: MvpAppCompatFragment(), UsersView, BackButtonListener {
         mainActivity?.let { mainActivity ->
             mainActivity.getUsersModel()?.let { users ->
                 presenter.setUsers(users)
-                adapter.notifyDataSetChanged()
             }
         }
+    }
+
+    fun getNetworkStatus(): NetworkStatus {
+        return status
     }
 }
