@@ -16,13 +16,16 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubRepoOwne
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.switchmap.Producer
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
+import javax.inject.Inject
 
 class MainActivity: MvpAppCompatActivity(), MainView {
     /** Задание переменных */ //region
     // binding
-    private var _binding: ActivityMainBinding? = null
-    private val binding
-        get() = _binding!!
+//    private var _binding: ActivityMainBinding? = null
+//    private val binding
+//        get() = _binding!!
+    @Inject
+    lateinit var binding: ActivityMainBinding
     // navigator
     private val navigator = AppNavigator(this@MainActivity, R.id.container)
     // moxyPresenter
@@ -39,7 +42,7 @@ class MainActivity: MvpAppCompatActivity(), MainView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         Producer().execFlatMap()
