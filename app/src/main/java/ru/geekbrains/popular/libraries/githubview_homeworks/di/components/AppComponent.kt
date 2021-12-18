@@ -6,6 +6,7 @@ import dagger.Component
 import ru.geekbrains.popular.libraries.githubview_homeworks.di.modules.BindingModule
 import ru.geekbrains.popular.libraries.githubview_homeworks.di.modules.CiceroneModule
 import ru.geekbrains.popular.libraries.githubview_homeworks.di.modules.ContextModule
+import ru.geekbrains.popular.libraries.githubview_homeworks.di.modules.NetworkModule
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.forks.ForksPresenter
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.main.MainPresenter
 import javax.inject.Singleton
@@ -16,7 +17,8 @@ import javax.inject.Singleton
     modules = [
         BindingModule::class,
         CiceroneModule::class,
-        ContextModule::class
+        ContextModule::class,
+        NetworkModule::class
     ]
 )
 
