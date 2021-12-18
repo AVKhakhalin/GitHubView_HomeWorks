@@ -3,9 +3,7 @@ package ru.geekbrains.popular.libraries.githubview_homeworks.ui.main
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.versionedparcelable.ParcelField
 import com.github.terrakok.cicerone.androidx.AppNavigator
-import kotlinx.android.parcel.Parcelize
 import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
 import ru.geekbrains.popular.libraries.githubview_homeworks.App
