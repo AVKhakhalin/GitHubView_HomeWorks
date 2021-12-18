@@ -12,6 +12,7 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.App
 import ru.geekbrains.popular.libraries.githubview_homeworks.databinding.FragmentForksBinding
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.main.MainActivity
+import javax.inject.Inject
 
 class ForksFragment: MvpAppCompatFragment(), ForksView, BackButtonListener {
     /** ЗАДАНИЕ ПЕРЕМЕННЫХ */ //region
@@ -21,7 +22,8 @@ class ForksFragment: MvpAppCompatFragment(), ForksView, BackButtonListener {
         get() = _binding!!
     // presenter
     private val presenter by moxyPresenter {
-        ForksPresenter(App.instance.router)
+//        ForksPresenter(App.instance.router)
+        ForksPresenter(App.instance.appComponent.routerInstance())
     }
     // mainActivity
     private var mainActivity: MainActivity? = null

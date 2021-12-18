@@ -15,15 +15,15 @@ class App: Application() {
             .build()
     }
 
-    private val cicerone: Cicerone<Router> by lazy {
-        Cicerone.create()
-    }
+//    private val cicerone: Cicerone<Router> by lazy {
+//        Cicerone.create()
+//    }
 
-    val navigationHolder
-        get() = cicerone.getNavigatorHolder()
+//    val navigationHolder
+//        get() = cicerone.getNavigatorHolder()
 
-    val router
-        get() = cicerone.router
+//    val router
+//        get() = cicerone.router
 
     override fun onCreate() {
         super.onCreate()

@@ -3,6 +3,7 @@ package ru.geekbrains.popular.libraries.githubview_homeworks.ui.main
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
@@ -24,10 +25,15 @@ class MainActivity: MvpAppCompatActivity(), MainView {
 //        get() = _binding!!
     @Inject
     lateinit var binding: ActivityMainBinding
+    // navigatorHolder
+//    @Inject
+//    lateinit var navigatorHolder: NavigatorHolder
+    var navigatorHolder: NavigatorHolder = App.instance.appComponent.getNavigationHolder()
     // navigator
     private val navigator = AppNavigator(this@MainActivity, R.id.container)
     // moxyPresenter
-    private val presenter by moxyPresenter { MainPresenter(App.instance.router) }
+//    private val presenter by moxyPresenter { MainPresenter(App.instance.router) }
+    private val presenter by moxyPresenter { MainPresenter(App.instance.appComponent.routerInstance()) }
     // githubUserModel
     private var githubUserModel: GithubUserModel =
         GithubUserModel("", "", "", "")
@@ -51,12 +57,14 @@ class MainActivity: MvpAppCompatActivity(), MainView {
 
     override fun onResumeFragments() {
         super.onResumeFragments()
-        App.instance.navigationHolder.setNavigator(navigator)
+//        App.instance.navigationHolder.setNavigator(navigator)
+        navigatorHolder.setNavigator(navigator)
     }
 
     override fun onPause() {
         super.onPause()
-        App.instance.navigationHolder.removeNavigator()
+//        App.instance.navigationHolder.removeNavigator()
+        navigatorHolder.removeNavigator()
     }
 
     override fun onBackPressed() {

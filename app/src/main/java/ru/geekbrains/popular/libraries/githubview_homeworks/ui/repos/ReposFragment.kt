@@ -24,8 +24,8 @@ class ReposFragment: MvpAppCompatFragment(), ReposView, BackButtonListener {
     // presenter
     private val presenter by moxyPresenter {
         ReposPresenter(
-            router = App.instance.router,
-//            router = App.instance.appComponent.routerInstance(),
+//            router = App.instance.router,
+            router = App.instance.appComponent.routerInstance(),
             repo = GithubRepoRepositoryImpl(
                 RoomGithubRepositoriesCache(NetworkStatus(requireContext()))
             ),
