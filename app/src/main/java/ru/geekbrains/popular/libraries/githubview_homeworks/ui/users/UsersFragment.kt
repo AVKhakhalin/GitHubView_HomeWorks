@@ -26,7 +26,6 @@ class UsersFragment: MvpAppCompatFragment(), UsersView, BackButtonListener {
     /** Задание переменных */ //region
     private val presenter by moxyPresenter {
         UsersPresenter(
-//            App.instance.router,
             App.instance.appComponent.routerInstance(),
             GithubUsersRepositoryImpl(
                 RoomGithubUsersCache(status),

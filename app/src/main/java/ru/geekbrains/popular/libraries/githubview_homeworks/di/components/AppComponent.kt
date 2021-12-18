@@ -8,6 +8,7 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.di.modules.CiceroneM
 import ru.geekbrains.popular.libraries.githubview_homeworks.di.modules.ContextModule
 import ru.geekbrains.popular.libraries.githubview_homeworks.di.modules.NetworkModule
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.forks.ForksPresenter
+import ru.geekbrains.popular.libraries.githubview_homeworks.ui.main.MainActivity
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.main.MainPresenter
 import javax.inject.Singleton
 
@@ -15,7 +16,7 @@ import javax.inject.Singleton
 @Singleton
 @Component(
     modules = [
-        BindingModule::class,
+//        BindingModule::class,
         CiceroneModule::class,
         ContextModule::class,
         NetworkModule::class
@@ -23,6 +24,9 @@ import javax.inject.Singleton
 )
 
 interface AppComponent {
+
+    fun injectMainActivity(mainActivity: MainActivity)
+    fun getMainActivity(): MainActivity
 
     fun routerInstance(): Router
     fun getNavigationHolder(): NavigatorHolder
