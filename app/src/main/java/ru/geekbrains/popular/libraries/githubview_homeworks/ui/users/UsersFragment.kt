@@ -24,13 +24,15 @@ class UsersFragment: MvpAppCompatFragment(), UsersView, BackButtonListener {
     private val status by lazy { NetworkStatus(requireContext().applicationContext) }
 
     /** Задание переменных */ //region
+    // mainActivity
+    private var mainActivity: MainActivity? = null
     private val presenter by moxyPresenter {
         UsersPresenter(
             App.instance.appComponent.routerInstance(),
             GithubUsersRepositoryImpl(
                 RoomGithubUsersCache(status),
             ),
-            this@UsersFragment,
+            mainActivity,
             status
         )
     }
@@ -43,8 +45,6 @@ class UsersFragment: MvpAppCompatFragment(), UsersView, BackButtonListener {
         UsersAdapter(presenter.usersListPresenter,
         GlideImageLoader())
     }
-    // mainActivity
-    private var mainActivity: MainActivity? = null
     //endregion
 
     companion object {

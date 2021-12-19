@@ -9,11 +9,13 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubRepoRep
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubRepoModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.screens.AppScreens
+import ru.geekbrains.popular.libraries.githubview_homeworks.ui.main.MainActivity
+import javax.inject.Inject
 
-class ReposPresenter(
+class ReposPresenter @Inject constructor(
     private val router: Router,
     private val repo: GithubRepoRepository,
-    private val reposFragment: ReposFragment
+    private val mainActivity: MainActivity?
 ): MvpPresenter<ReposView>() {
 
     override fun onFirstViewAttach() {
@@ -23,7 +25,7 @@ class ReposPresenter(
     }
 
     private fun loadData() {
-        reposFragment.getMainActivity()?.let { mainActivity ->
+        mainActivity?.let { mainActivity ->
             val userModel: GithubUserModel = mainActivity.getGithubUserModel()
             userModel?.let { userModel ->
                 repo.getRepos(userModel)
@@ -48,7 +50,7 @@ class ReposPresenter(
     }
 
     fun onRepoClicked(repo: GithubRepoModel) {
-        reposFragment.getMainActivity()?.let { mainActivity ->
+        mainActivity?.let { mainActivity ->
             mainActivity.setGithubRepoModel(repo)
         }
         router.navigateTo(AppScreens.forksScreen())
@@ -58,5 +60,4 @@ class ReposPresenter(
         router.exit()
         return true
     }
-
 }

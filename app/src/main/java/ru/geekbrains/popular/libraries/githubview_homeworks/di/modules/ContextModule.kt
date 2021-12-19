@@ -15,10 +15,4 @@ class ContextModule(private val app: Application) {
     fun app(): Context {
         return app
     }
-
-    @Singleton
-    @Provides
-    fun getMainActivity(): MainActivity {
-        return app() as MainActivity
-    }
 }

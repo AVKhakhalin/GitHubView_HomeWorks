@@ -9,13 +9,11 @@ import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
 import ru.geekbrains.popular.libraries.githubview_homeworks.App
 import ru.geekbrains.popular.libraries.githubview_homeworks.R
-import ru.geekbrains.popular.libraries.githubview_homeworks.databinding.ActivityMainBinding
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubRepoModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubRepoOwner
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.switchmap.Producer
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
-import javax.inject.Inject
 
 class MainActivity : MvpAppCompatActivity(R.layout.activity_main), MainView {
     /** Задание переменных */ //region
@@ -49,13 +47,11 @@ class MainActivity : MvpAppCompatActivity(R.layout.activity_main), MainView {
 
     override fun onResumeFragments() {
         super.onResumeFragments()
-//        App.instance.navigationHolder.setNavigator(navigator)
         navigatorHolder.setNavigator(navigator)
     }
 
     override fun onPause() {
         super.onPause()
-//        App.instance.navigationHolder.removeNavigator()
         navigatorHolder.removeNavigator()
     }
 

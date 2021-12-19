@@ -22,7 +22,6 @@ class ForksFragment: MvpAppCompatFragment(), ForksView, BackButtonListener {
         get() = _binding!!
     // presenter
     private val presenter by moxyPresenter {
-//        ForksPresenter(App.instance.router)
         ForksPresenter(App.instance.appComponent.routerInstance())
     }
     // mainActivity

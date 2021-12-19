@@ -17,19 +17,19 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubRepoMode
 import ru.geekbrains.popular.libraries.githubview_homeworks.remote.connectivity.NetworkStatus
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.main.MainActivity
-import javax.inject.Inject
 
 class ReposFragment: MvpAppCompatFragment(), ReposView, BackButtonListener {
     /** ЗАДАНИЕ ПЕРЕМЕННЫХ */ //region
+    // mainActivity
+    private var mainActivity: MainActivity? = null
     // presenter
     private val presenter by moxyPresenter {
         ReposPresenter(
-//            router = App.instance.router,
             router = App.instance.appComponent.routerInstance(),
             repo = GithubRepoRepositoryImpl(
                 RoomGithubRepositoriesCache(NetworkStatus(requireContext()))
             ),
-            this@ReposFragment
+            mainActivity
         )
     }
     // binding
@@ -40,8 +40,6 @@ class ReposFragment: MvpAppCompatFragment(), ReposView, BackButtonListener {
     private val adapter by lazy {
         ReposAdapter { presenter.onRepoClicked(it) }
     }
-    // mainActivity
-    private var mainActivity: MainActivity? = null
     //endregion
 
     override fun onAttach(context: Context) {
