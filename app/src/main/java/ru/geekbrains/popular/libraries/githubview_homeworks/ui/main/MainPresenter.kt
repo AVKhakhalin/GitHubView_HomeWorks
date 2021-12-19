@@ -6,7 +6,6 @@ import android.os.Build
 import androidx.core.app.ActivityCompat
 import com.github.terrakok.cicerone.Router
 import moxy.MvpPresenter
-import ru.geekbrains.popular.libraries.githubview_homeworks.App
 import ru.geekbrains.popular.libraries.githubview_homeworks.screens.AppScreens
 import javax.inject.Inject
 

@@ -12,7 +12,6 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.App
 import ru.geekbrains.popular.libraries.githubview_homeworks.databinding.FragmentForksBinding
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.main.MainActivity
-import javax.inject.Inject
 
 class ForksFragment: MvpAppCompatFragment(), ForksView, BackButtonListener {
     /** ЗАДАНИЕ ПЕРЕМЕННЫХ */ //region

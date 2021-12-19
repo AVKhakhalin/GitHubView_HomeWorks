@@ -6,6 +6,7 @@ import dagger.Component
 import ru.geekbrains.popular.libraries.githubview_homeworks.di.modules.CiceroneModule
 import ru.geekbrains.popular.libraries.githubview_homeworks.di.modules.ContextModule
 import ru.geekbrains.popular.libraries.githubview_homeworks.di.modules.NetworkModule
+import ru.geekbrains.popular.libraries.githubview_homeworks.remote.connectivity.NetworkStatus
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.forks.ForksPresenter
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.main.MainActivity
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.main.MainPresenter
@@ -30,5 +31,7 @@ interface AppComponent {
 
     fun mainPresenter(): MainPresenter
     fun forksPresenter(): ForksPresenter
+
+    fun networkStatus(): NetworkStatus
 
 }

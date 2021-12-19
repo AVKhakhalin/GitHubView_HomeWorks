@@ -13,15 +13,12 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.databinding.Fragment
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubUsersRepositoryImpl
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.cache.RoomGithubUsersCache
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
-import ru.geekbrains.popular.libraries.githubview_homeworks.remote.connectivity.NetworkStatus
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.main.MainActivity
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.users.adapter.UsersAdapter
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.utils.GlideImageLoader
 
 class UsersFragment: MvpAppCompatFragment(), UsersView, BackButtonListener {
-
-    private val status by lazy { NetworkStatus(requireContext().applicationContext) }
 
     /** Задание переменных */ //region
     // mainActivity
@@ -30,10 +27,10 @@ class UsersFragment: MvpAppCompatFragment(), UsersView, BackButtonListener {
         UsersPresenter(
             App.instance.appComponent.routerInstance(),
             GithubUsersRepositoryImpl(
-                RoomGithubUsersCache(status),
+                RoomGithubUsersCache(App.instance.appComponent.networkStatus()),
             ),
             mainActivity,
-            status
+            App.instance.appComponent.networkStatus()
         )
     }
     // binding
@@ -109,9 +106,5 @@ class UsersFragment: MvpAppCompatFragment(), UsersView, BackButtonListener {
                 presenter.setUsers(users)
             }
         }
-    }
-
-    fun getNetworkStatus(): NetworkStatus {
-        return status
     }
 }

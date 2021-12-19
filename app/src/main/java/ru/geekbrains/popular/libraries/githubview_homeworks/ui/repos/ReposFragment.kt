@@ -14,7 +14,6 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.databinding.Fragment
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubRepoRepositoryImpl
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.cache.RoomGithubRepositoriesCache
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubRepoModel
-import ru.geekbrains.popular.libraries.githubview_homeworks.remote.connectivity.NetworkStatus
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.main.MainActivity
 
@@ -27,7 +26,7 @@ class ReposFragment: MvpAppCompatFragment(), ReposView, BackButtonListener {
         ReposPresenter(
             router = App.instance.appComponent.routerInstance(),
             repo = GithubRepoRepositoryImpl(
-                RoomGithubRepositoriesCache(NetworkStatus(requireContext()))
+                RoomGithubRepositoriesCache(App.instance.appComponent.networkStatus())
             ),
             mainActivity
         )
