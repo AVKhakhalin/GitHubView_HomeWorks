@@ -27,7 +27,11 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
         UsersPresenter(
             App.instance.appComponent.routerInstance(),
             GithubUsersRepositoryImpl(
-                RoomGithubUsersCache(App.instance.appComponent.networkStatus()),
+                RoomGithubUsersCache(
+                    App.instance.appComponent.networkStatus(),
+                    App.instance.appComponent.retrofit(),
+                    App.instance.appComponent.db()
+                ),
             ),
             mainActivity,
             App.instance.appComponent.networkStatus()

@@ -27,7 +27,11 @@ class ReposFragment : MvpAppCompatFragment(), ReposView, BackButtonListener {
         ReposPresenter(
             router = App.instance.appComponent.routerInstance(),
             repo = GithubRepoRepositoryImpl(
-                RoomGithubRepositoriesCache(App.instance.appComponent.networkStatus())
+                RoomGithubRepositoriesCache(
+                    App.instance.appComponent.networkStatus(),
+                    App.instance.appComponent.retrofit(),
+                    App.instance.appComponent.db()
+                )
             ),
             mainActivity
         )
