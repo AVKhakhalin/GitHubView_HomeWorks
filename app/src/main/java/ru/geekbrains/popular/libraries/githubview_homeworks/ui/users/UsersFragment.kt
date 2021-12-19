@@ -34,7 +34,8 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
                 ),
             ),
             mainActivity,
-            App.instance.appComponent.networkStatus()
+            App.instance.appComponent.networkStatus(),
+            App.instance.appComponent.appScreens()
         )
     }
 
@@ -100,10 +101,6 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-    }
-
-    fun getMainActivity(): MainActivity? {
-        return mainActivity
     }
 
     override fun onResume() {

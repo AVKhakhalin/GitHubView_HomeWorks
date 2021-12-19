@@ -20,13 +20,15 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.ui.main.MainActivity
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
+import java.io.PrintStream
 import javax.inject.Inject
 
 class UsersPresenter @Inject constructor(
     private val router: Router,
     private val usersRepository: GithubUsersRepository,
     private val mainActivity: MainActivity?,
-    private val networkStatus: NetworkStatus
+    private val networkStatus: NetworkStatus,
+    private val appScreens: AppScreens
 ) : MvpPresenter<UsersView>() {
     /** ИСХОДНЫЕ ДАННЫЕ */ //region
     // users
@@ -52,7 +54,7 @@ class UsersPresenter @Inject constructor(
                 mainActivity.setGithubUserModel(userModel)
                 mainActivity.setUsersModel(users)
             }
-            router.navigateTo(AppScreens.repoScreen())
+            router.navigateTo(appScreens.repoScreen())
         }
     }
 

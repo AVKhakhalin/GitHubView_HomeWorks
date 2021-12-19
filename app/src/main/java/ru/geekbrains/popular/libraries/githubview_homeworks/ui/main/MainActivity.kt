@@ -24,7 +24,12 @@ class MainActivity : MvpAppCompatActivity(R.layout.activity_main), MainView {
     private val navigator = AppNavigator(this@MainActivity, R.id.container)
 
     // moxyPresenter
-    private val presenter by moxyPresenter { MainPresenter(App.instance.appComponent.routerInstance()) }
+    private val presenter by moxyPresenter {
+        MainPresenter(
+            App.instance.appComponent.routerInstance(),
+            App.instance.appComponent.appScreens()
+        )
+    }
 
     // githubUserModel
     private var githubUserModel: GithubUserModel =

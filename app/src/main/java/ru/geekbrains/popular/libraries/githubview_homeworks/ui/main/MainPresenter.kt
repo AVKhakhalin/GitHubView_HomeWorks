@@ -10,13 +10,14 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.screens.AppScreens
 import javax.inject.Inject
 
 class MainPresenter @Inject constructor(
-    private val router: Router
-) : MvpPresenter<MainView>() {
+    private val router: Router,
+    private val appScreens: AppScreens
+): MvpPresenter<MainView>() {
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
 
-        router.replaceScreen(AppScreens.usersScreen())
+        router.replaceScreen(appScreens.usersScreen())
     }
 
     fun backPressed() {

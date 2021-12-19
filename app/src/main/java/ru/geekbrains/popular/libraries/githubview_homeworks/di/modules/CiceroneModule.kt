@@ -5,6 +5,8 @@ import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.Router
 import dagger.Module
 import dagger.Provides
+import ru.geekbrains.popular.libraries.githubview_homeworks.screens.AppScreens
+import ru.geekbrains.popular.libraries.githubview_homeworks.screens.AppScreensImpl
 import javax.inject.Singleton
 
 @Module
@@ -24,9 +26,9 @@ class CiceroneModule {
         return cicerone.router
     }
 
-//    @Singleton
-//    @Provides
-//    fun appScreens(): AppScreens {
-//        return AppScreensImpl()
-//    }
+    @Singleton
+    @Provides
+    fun appScreens(): AppScreens {
+        return AppScreensImpl()
+    }
 }
