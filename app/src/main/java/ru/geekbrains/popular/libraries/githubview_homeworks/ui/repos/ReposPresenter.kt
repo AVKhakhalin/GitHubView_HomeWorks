@@ -15,8 +15,15 @@ import javax.inject.Inject
 class ReposPresenter @Inject constructor(
     private val router: Router,
     private val repo: GithubRepoRepository,
-    private val mainActivity: MainActivity?
-) : MvpPresenter<ReposView>() {
+): MvpPresenter<ReposView>() {
+    /** ИСХОДНЫЕ ДАННЫЕ */ //region
+    // mainActivity
+    private var mainActivity: MainActivity? = null
+    //endregion
+
+    fun setMainActivity(mainActivity: MainActivity?) {
+        this.mainActivity = mainActivity
+    }
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()

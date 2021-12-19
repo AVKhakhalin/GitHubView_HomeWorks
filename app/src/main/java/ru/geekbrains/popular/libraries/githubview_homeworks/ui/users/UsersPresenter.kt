@@ -20,23 +20,26 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.ui.main.MainActivity
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
-import java.io.PrintStream
 import javax.inject.Inject
 
 class UsersPresenter @Inject constructor(
     private val router: Router,
     private val usersRepository: GithubUsersRepository,
-    private val mainActivity: MainActivity?,
     private val networkStatus: NetworkStatus,
     private val appScreens: AppScreens
 ) : MvpPresenter<UsersView>() {
     /** ИСХОДНЫЕ ДАННЫЕ */ //region
     // users
     private var users: List<GithubUserModel> = listOf()
-
+    // mainActivity
+    private var mainActivity: MainActivity? = null
     // usersListPresenter
     val usersListPresenter = UsersListPresenter(mainActivity, networkStatus)
     //endregion
+
+    fun setMainActivity(mainActivity: MainActivity?) {
+        this.mainActivity = mainActivity
+    }
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -83,7 +86,7 @@ class UsersPresenter @Inject constructor(
         return true
     }
 
-    class UsersListPresenter(mainActivity: MainActivity?, networkStatus: NetworkStatus) :
+    class UsersListPresenter(mainActivity: MainActivity?, networkStatus: NetworkStatus):
         IListPresenter<UserItemView> {
 
         var users: MutableList<GithubUserModel> = mutableListOf<GithubUserModel>()

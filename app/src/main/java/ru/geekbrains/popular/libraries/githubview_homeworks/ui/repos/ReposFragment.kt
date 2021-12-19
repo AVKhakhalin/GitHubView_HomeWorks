@@ -32,8 +32,7 @@ class ReposFragment : MvpAppCompatFragment(), ReposView, BackButtonListener {
                     App.instance.appComponent.retrofit(),
                     App.instance.appComponent.db()
                 )
-            ),
-            mainActivity
+            )
         )
     }
 
@@ -66,13 +65,16 @@ class ReposFragment : MvpAppCompatFragment(), ReposView, BackButtonListener {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        /** Установка в ReposPresenter MainActivity */
+        presenter.setMainActivity(mainActivity)
+        /** Установка заголовка окна */
         mainActivity?.let { mainActivity ->
             mainActivity.getGithubUserModel()?.let { userModel ->
                 binding.reposTitle.text =
                     "Список репозиториев\nпользователя \"${userModel.login}\":"
             }
         }
+        /** Установка списка репозиториев пользователя */
         binding.reposRecycler.layoutManager = LinearLayoutManager(requireContext())
         binding.reposRecycler.adapter = adapter
     }

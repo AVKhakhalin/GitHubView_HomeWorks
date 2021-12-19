@@ -2,7 +2,6 @@ package ru.geekbrains.popular.libraries.githubview_homeworks.di.components
 
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.Router
-import com.github.terrakok.cicerone.androidx.AppScreen
 import dagger.Component
 import ru.geekbrains.popular.libraries.githubview_homeworks.db.AppDatabase
 import ru.geekbrains.popular.libraries.githubview_homeworks.di.modules.CacheModule
@@ -16,7 +15,6 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.ui.forks.ForksPresen
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.main.MainActivity
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.main.MainPresenter
 import javax.inject.Singleton
-
 
 @Singleton
 @Component(
@@ -33,7 +31,7 @@ interface AppComponent {
     fun injectMainActivity(mainActivity: MainActivity)
 
     fun routerInstance(): Router
-    fun getNavigationHolder(): NavigatorHolder
+    fun navigationHolder(): NavigatorHolder
 
     fun mainPresenter(): MainPresenter
     fun forksPresenter(): ForksPresenter

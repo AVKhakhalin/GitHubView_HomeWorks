@@ -18,7 +18,7 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonLi
 class MainActivity : MvpAppCompatActivity(R.layout.activity_main), MainView {
     /** Задание переменных */ //region
     // navigatorHolder
-    var navigatorHolder: NavigatorHolder = App.instance.appComponent.getNavigationHolder()
+    var navigatorHolder: NavigatorHolder = App.instance.appComponent.navigationHolder()
 
     // navigator
     private val navigator = AppNavigator(this@MainActivity, R.id.container)

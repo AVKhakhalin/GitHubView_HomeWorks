@@ -33,7 +33,6 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
                     App.instance.appComponent.db()
                 ),
             ),
-            mainActivity,
             App.instance.appComponent.networkStatus(),
             App.instance.appComponent.appScreens()
         )
@@ -43,7 +42,6 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
     private var _binding: FragmentUsersBinding? = null
     private val binding
         get() = _binding!!
-
     // adapter
     private val adapter by lazy {
         UsersAdapter(
@@ -74,7 +72,9 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        /** Установка mainActivity в UsersPresenter */
+        presenter.setMainActivity(mainActivity)
+        /** Установка списка пользователей */
         binding.usersListRecycler.layoutManager = LinearLayoutManager(requireContext())
         binding.usersListRecycler.adapter = adapter
     }
