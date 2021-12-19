@@ -17,10 +17,11 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubRepoMode
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.main.MainActivity
 
-class ReposFragment: MvpAppCompatFragment(), ReposView, BackButtonListener {
+class ReposFragment : MvpAppCompatFragment(), ReposView, BackButtonListener {
     /** ЗАДАНИЕ ПЕРЕМЕННЫХ */ //region
     // mainActivity
     private var mainActivity: MainActivity? = null
+
     // presenter
     private val presenter by moxyPresenter {
         ReposPresenter(
@@ -31,10 +32,12 @@ class ReposFragment: MvpAppCompatFragment(), ReposView, BackButtonListener {
             mainActivity
         )
     }
+
     // binding
     private var _binding: FragmentReposBinding? = null
     private val binding
         get() = _binding!!
+
     // adapter
     private val adapter by lazy {
         ReposAdapter { presenter.onRepoClicked(it) }
@@ -46,7 +49,11 @@ class ReposFragment: MvpAppCompatFragment(), ReposView, BackButtonListener {
         mainActivity = (context as MainActivity)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentReposBinding.inflate(inflater, container, false)
         return binding.root
 
@@ -58,7 +65,8 @@ class ReposFragment: MvpAppCompatFragment(), ReposView, BackButtonListener {
 
         mainActivity?.let { mainActivity ->
             mainActivity.getGithubUserModel()?.let { userModel ->
-                binding.reposTitle.text = "Список репозиториев\nпользователя \"${userModel.login}\":"
+                binding.reposTitle.text =
+                    "Список репозиториев\nпользователя \"${userModel.login}\":"
             }
         }
         binding.reposRecycler.layoutManager = LinearLayoutManager(requireContext())
@@ -95,7 +103,8 @@ class ReposFragment: MvpAppCompatFragment(), ReposView, BackButtonListener {
 
         mainActivity?.let { mainActivity ->
             mainActivity.getGithubUserModel()?.let { userModel ->
-                binding.reposTitle.text = "Список репозиториев\nпользователя \"${userModel.login}\":"
+                binding.reposTitle.text =
+                    "Список репозиториев\nпользователя \"${userModel.login}\":"
             }
         }
         binding.reposRecycler.layoutManager = LinearLayoutManager(requireContext())

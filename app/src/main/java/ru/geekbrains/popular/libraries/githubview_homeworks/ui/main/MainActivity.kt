@@ -18,17 +18,19 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonLi
 class MainActivity : MvpAppCompatActivity(R.layout.activity_main), MainView {
     /** Задание переменных */ //region
     // navigatorHolder
-//    @Inject
-//    lateinit var navigatorHolder: NavigatorHolder
     var navigatorHolder: NavigatorHolder = App.instance.appComponent.getNavigationHolder()
+
     // navigator
     private val navigator = AppNavigator(this@MainActivity, R.id.container)
+
     // moxyPresenter
     private val presenter by moxyPresenter { MainPresenter(App.instance.appComponent.routerInstance()) }
+
     // githubUserModel
     private var githubUserModel: GithubUserModel =
         GithubUserModel("", "", "", "")
     private var users: List<GithubUserModel> = listOf()
+
     // githubRepoModel
     private var githubRepoModel: GithubRepoModel =
         GithubRepoModel("", "", GithubRepoOwner(""), 0)
@@ -68,24 +70,31 @@ class MainActivity : MvpAppCompatActivity(R.layout.activity_main), MainView {
     fun setGithubUserModel(githubUserModel: GithubUserModel) {
         this.githubUserModel = githubUserModel
     }
+
     fun setUsersModel(users: List<GithubUserModel>) {
         this.users = users
     }
+
     fun getGithubUserModel(): GithubUserModel {
         return githubUserModel
     }
+
     fun getUsersModel(): List<GithubUserModel> {
         return users
     }
+
     fun setGithubRepoModel(githubRepoModel: GithubRepoModel) {
         this.githubRepoModel = githubRepoModel
     }
+
     fun setReposModel(repos: List<GithubRepoModel>) {
         this.repos = repos
     }
+
     fun getGithubRepoModel(): GithubRepoModel {
         return githubRepoModel
     }
+
     fun getReposModel(): List<GithubRepoModel> {
         return repos
     }
@@ -165,10 +174,18 @@ class MainActivity : MvpAppCompatActivity(R.layout.activity_main), MainView {
                     GithubRepoModel(
                         savedInstanceState.getString("REPO_MODEL_${index}_ID") ?: "",
                         savedInstanceState.getString("REPO_MODEL_${index}_NAME") ?: "",
-                        GithubRepoOwner(savedInstanceState.getString("REPO_MODEL_${
-                            index}_OWNER_ID") ?: ""),
-                        savedInstanceState.getInt("REPO_MODEL_${
-                            index}_FORKSCOUNT") ?: -1,
+                        GithubRepoOwner(
+                            savedInstanceState.getString(
+                                "REPO_MODEL_${
+                                    index
+                                }_OWNER_ID"
+                            ) ?: ""
+                        ),
+                        savedInstanceState.getInt(
+                            "REPO_MODEL_${
+                                index
+                            }_FORKSCOUNT"
+                        ) ?: -1,
                     )
                 )
             }

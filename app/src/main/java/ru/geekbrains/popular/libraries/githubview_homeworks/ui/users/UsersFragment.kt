@@ -18,7 +18,7 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.ui.main.MainActivity
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.users.adapter.UsersAdapter
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.utils.GlideImageLoader
 
-class UsersFragment: MvpAppCompatFragment(), UsersView, BackButtonListener {
+class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
 
     /** Задание переменных */ //region
     // mainActivity
@@ -33,14 +33,18 @@ class UsersFragment: MvpAppCompatFragment(), UsersView, BackButtonListener {
             App.instance.appComponent.networkStatus()
         )
     }
+
     // binding
     private var _binding: FragmentUsersBinding? = null
     private val binding
         get() = _binding!!
+
     // adapter
     private val adapter by lazy {
-        UsersAdapter(presenter.usersListPresenter,
-        GlideImageLoader())
+        UsersAdapter(
+            presenter.usersListPresenter,
+            GlideImageLoader()
+        )
     }
     //endregion
 

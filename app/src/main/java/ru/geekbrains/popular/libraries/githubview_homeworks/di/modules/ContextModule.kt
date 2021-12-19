@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import dagger.Module
 import dagger.Provides
-import ru.geekbrains.popular.libraries.githubview_homeworks.ui.main.MainActivity
 import javax.inject.Singleton
 
 @Module

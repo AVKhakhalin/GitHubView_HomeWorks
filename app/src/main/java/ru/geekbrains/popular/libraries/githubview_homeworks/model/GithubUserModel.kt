@@ -15,4 +15,4 @@ data class GithubUserModel(
     val avatarUrl: String,
     @Expose
     val reposUrl: String
-): Parcelable
+) : Parcelable

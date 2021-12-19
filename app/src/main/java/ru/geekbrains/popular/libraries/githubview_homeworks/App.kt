@@ -5,7 +5,7 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.di.components.AppCom
 import ru.geekbrains.popular.libraries.githubview_homeworks.di.components.DaggerAppComponent
 import ru.geekbrains.popular.libraries.githubview_homeworks.di.modules.ContextModule
 
-class App: Application() {
+class App : Application() {
 
     val appComponent: AppComponent by lazy {
         DaggerAppComponent.builder()

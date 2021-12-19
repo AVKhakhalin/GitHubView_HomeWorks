@@ -16,7 +16,7 @@ class ReposPresenter @Inject constructor(
     private val router: Router,
     private val repo: GithubRepoRepository,
     private val mainActivity: MainActivity?
-): MvpPresenter<ReposView>() {
+) : MvpPresenter<ReposView>() {
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -38,7 +38,8 @@ class ReposPresenter @Inject constructor(
                             viewState.hideLoading()
                             mainActivity.setReposModel(repos)
                         }, {
-                            Log.e("mylogs",
+                            Log.e(
+                                "mylogs",
                                 "Ошибка при получении репозиториев",
                                 it
                             )

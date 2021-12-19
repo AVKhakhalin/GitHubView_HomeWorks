@@ -7,7 +7,7 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserMode
 
 class GithubRepoRepositoryImpl(
     private val roomGithubRepositoriesCache: GithubRepoCacheRepository
-): GithubRepoRepository {
+) : GithubRepoRepository {
 
     override fun getRepos(userModel: GithubUserModel): Single<List<GithubRepoModel>> {
         return roomGithubRepositoriesCache.getCacheRepo(userModel)

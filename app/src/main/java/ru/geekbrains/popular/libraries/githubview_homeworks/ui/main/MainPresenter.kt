@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class MainPresenter @Inject constructor(
     private val router: Router
-): MvpPresenter<MainView>() {
+) : MvpPresenter<MainView>() {
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -27,7 +27,8 @@ class MainPresenter @Inject constructor(
     fun isStoragePermissionGranted(mainActivity: MainActivity): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (mainActivity.checkSelfPermission(
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
                 == PackageManager.PERMISSION_GRANTED
             ) {
                 mainActivity.showMessage("Разрешение на запись и считывание данных получено")
@@ -37,7 +38,8 @@ class MainPresenter @Inject constructor(
                 ActivityCompat.requestPermissions(
                     mainActivity,
                     arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                    1)
+                    1
+                )
                 false
             }
         } else {

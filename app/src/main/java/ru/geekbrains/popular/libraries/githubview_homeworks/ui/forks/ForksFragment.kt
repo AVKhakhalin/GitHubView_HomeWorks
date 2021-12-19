@@ -13,16 +13,18 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.databinding.Fragment
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.main.MainActivity
 
-class ForksFragment: MvpAppCompatFragment(), ForksView, BackButtonListener {
+class ForksFragment : MvpAppCompatFragment(), ForksView, BackButtonListener {
     /** ЗАДАНИЕ ПЕРЕМЕННЫХ */ //region
     // binding
     private var _binding: FragmentForksBinding? = null
     private val binding
         get() = _binding!!
+
     // presenter
     private val presenter by moxyPresenter {
         ForksPresenter(App.instance.appComponent.routerInstance())
     }
+
     // mainActivity
     private var mainActivity: MainActivity? = null
     //endregion
@@ -36,8 +38,10 @@ class ForksFragment: MvpAppCompatFragment(), ForksView, BackButtonListener {
         mainActivity = (context as MainActivity)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentForksBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -48,7 +52,8 @@ class ForksFragment: MvpAppCompatFragment(), ForksView, BackButtonListener {
 
         mainActivity?.let { mainActivity ->
             mainActivity.getGithubUserModel()?.let { userModel ->
-                binding.repoTitle.text = "Информация о репозитории пользователя \"${userModel.login}\":"
+                binding.repoTitle.text =
+                    "Информация о репозитории пользователя \"${userModel.login}\":"
             }
             mainActivity.getGithubRepoModel()?.let { repoModel ->
                 binding.repoId.text = "ID: ${repoModel.id}"
@@ -64,7 +69,8 @@ class ForksFragment: MvpAppCompatFragment(), ForksView, BackButtonListener {
 
         mainActivity?.let { mainActivity ->
             mainActivity.getGithubUserModel()?.let { userModel ->
-                binding.repoTitle.text = "Информация о репозитории пользователя \"${userModel.login}\":"
+                binding.repoTitle.text =
+                    "Информация о репозитории пользователя \"${userModel.login}\":"
             }
             mainActivity.getGithubRepoModel()?.let { repoModel ->
                 binding.repoId.text = "ID: ${repoModel.id}"

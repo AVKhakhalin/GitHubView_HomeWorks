@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class ForksPresenter @Inject constructor(
     private val router: Router
-): MvpPresenter<MainView>() {
+) : MvpPresenter<MainView>() {
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()

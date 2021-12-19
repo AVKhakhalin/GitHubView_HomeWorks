@@ -27,10 +27,11 @@ class UsersPresenter @Inject constructor(
     private val usersRepository: GithubUsersRepository,
     private val mainActivity: MainActivity?,
     private val networkStatus: NetworkStatus
-): MvpPresenter<UsersView>() {
+) : MvpPresenter<UsersView>() {
     /** ИСХОДНЫЕ ДАННЫЕ */ //region
     // users
     private var users: List<GithubUserModel> = listOf()
+
     // usersListPresenter
     val usersListPresenter = UsersListPresenter(mainActivity, networkStatus)
     //endregion
@@ -40,18 +41,19 @@ class UsersPresenter @Inject constructor(
 
         loadData()
 
-            usersListPresenter.itemClickListener = { userItemView ->
-                val userModel: GithubUserModel = GithubUserModel(
-                    users[userItemView.pos].id,
-                    users[userItemView.pos].login,
-                    users[userItemView.pos].avatarUrl,
-                    users[userItemView.pos].reposUrl)
-                mainActivity?.let { mainActivity ->
-                    mainActivity.setGithubUserModel(userModel)
-                    mainActivity.setUsersModel(users)
-                }
-                router.navigateTo(AppScreens.repoScreen())
+        usersListPresenter.itemClickListener = { userItemView ->
+            val userModel: GithubUserModel = GithubUserModel(
+                users[userItemView.pos].id,
+                users[userItemView.pos].login,
+                users[userItemView.pos].avatarUrl,
+                users[userItemView.pos].reposUrl
+            )
+            mainActivity?.let { mainActivity ->
+                mainActivity.setGithubUserModel(userModel)
+                mainActivity.setUsersModel(users)
             }
+            router.navigateTo(AppScreens.repoScreen())
+        }
     }
 
     fun loadData() {
@@ -79,7 +81,7 @@ class UsersPresenter @Inject constructor(
         return true
     }
 
-    class UsersListPresenter(mainActivity: MainActivity?, networkStatus: NetworkStatus):
+    class UsersListPresenter(mainActivity: MainActivity?, networkStatus: NetworkStatus) :
         IListPresenter<UserItemView> {
 
         var users: MutableList<GithubUserModel> = mutableListOf<GithubUserModel>()
@@ -98,8 +100,13 @@ class UsersPresenter @Inject constructor(
             if (networkStatus.isOnline()) {
                 view.setAvatar(user.avatarUrl)
                 mainActivity?.let { mainActivity ->
-                    file = File("${mainActivity.getExternalFilesDir(
-                                Environment.DIRECTORY_PICTURES)}/CacheAvatars/${user.login}")
+                    file = File(
+                        "${
+                            mainActivity.getExternalFilesDir(
+                                Environment.DIRECTORY_PICTURES
+                            )
+                        }/CacheAvatars/${user.login}"
+                    )
 
                     /** Сохранение картинки в локальную папку с данным приложением */
                     /** Создание директории, если она ещё не создана */
@@ -124,9 +131,13 @@ class UsersPresenter @Inject constructor(
                 }
             } else {
                 mainActivity?.let { mainActivity ->
-                    file = File("${mainActivity.getExternalFilesDir(
-                                Environment.DIRECTORY_PICTURES)
-                        }/CacheAvatars/${user.login}")
+                    file = File(
+                        "${
+                            mainActivity.getExternalFilesDir(
+                                Environment.DIRECTORY_PICTURES
+                            )
+                        }/CacheAvatars/${user.login}"
+                    )
                     file = File(file, "${user.login}.jpg")
                     if ((file.exists()) && (file.length() > 0)) {
                         view.setAvatar(file.toString())
@@ -134,6 +145,7 @@ class UsersPresenter @Inject constructor(
                 }
             }
         }
+
         /** Сохранение картинки */
         private fun saveImage(image: Bitmap, outPutFile: File) {
             try {
