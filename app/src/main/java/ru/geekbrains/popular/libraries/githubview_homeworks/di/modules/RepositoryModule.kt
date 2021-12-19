@@ -9,8 +9,8 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubUsersRe
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubUsersRepositoryImpl
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.cache.GithubRepoCacheRepository
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.cache.GithubUsersCacheRepository
-import ru.geekbrains.popular.libraries.githubview_homeworks.domain.cache.RoomGithubRepositoriesCache
-import ru.geekbrains.popular.libraries.githubview_homeworks.domain.cache.RoomGithubUsersCache
+import ru.geekbrains.popular.libraries.githubview_homeworks.domain.cache.GithubRepoCacheRepositoryImpl
+import ru.geekbrains.popular.libraries.githubview_homeworks.domain.cache.GithubUsersCacheRepositoryImpl
 import ru.geekbrains.popular.libraries.githubview_homeworks.remote.RetrofitService
 import ru.geekbrains.popular.libraries.githubview_homeworks.remote.connectivity.NetworkStatus
 import javax.inject.Singleton
@@ -33,7 +33,7 @@ class RepositoryModule {
         retrofitService: RetrofitService,
         db: AppDatabase
     ): GithubUsersCacheRepository {
-        return RoomGithubUsersCache(networkStatus, retrofitService, db)
+        return GithubUsersCacheRepositoryImpl(networkStatus, retrofitService, db)
     }
 
     @Singleton
@@ -51,6 +51,6 @@ class RepositoryModule {
         retrofitService: RetrofitService,
         db: AppDatabase
     ): GithubRepoCacheRepository {
-        return RoomGithubRepositoriesCache(networkStatus, retrofitService, db)
+        return GithubRepoCacheRepositoryImpl(networkStatus, retrofitService, db)
     }
 }

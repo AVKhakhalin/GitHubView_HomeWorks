@@ -11,7 +11,7 @@ import moxy.ktx.moxyPresenter
 import ru.geekbrains.popular.libraries.githubview_homeworks.App
 import ru.geekbrains.popular.libraries.githubview_homeworks.databinding.FragmentUsersBinding
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubUsersRepositoryImpl
-import ru.geekbrains.popular.libraries.githubview_homeworks.domain.cache.RoomGithubUsersCache
+import ru.geekbrains.popular.libraries.githubview_homeworks.domain.cache.GithubUsersCacheRepositoryImpl
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.main.MainActivity
@@ -27,7 +27,7 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
         UsersPresenter(
             App.instance.appComponent.routerInstance(),
             GithubUsersRepositoryImpl(
-                RoomGithubUsersCache(
+                GithubUsersCacheRepositoryImpl(
                     App.instance.appComponent.networkStatus(),
                     App.instance.appComponent.retrofit(),
                     App.instance.appComponent.db()

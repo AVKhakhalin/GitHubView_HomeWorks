@@ -12,7 +12,7 @@ import moxy.ktx.moxyPresenter
 import ru.geekbrains.popular.libraries.githubview_homeworks.App
 import ru.geekbrains.popular.libraries.githubview_homeworks.databinding.FragmentReposBinding
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubRepoRepositoryImpl
-import ru.geekbrains.popular.libraries.githubview_homeworks.domain.cache.RoomGithubRepositoriesCache
+import ru.geekbrains.popular.libraries.githubview_homeworks.domain.cache.GithubRepoCacheRepositoryImpl
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubRepoModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.main.MainActivity
@@ -27,7 +27,7 @@ class ReposFragment : MvpAppCompatFragment(), ReposView, BackButtonListener {
         ReposPresenter(
             router = App.instance.appComponent.routerInstance(),
             repo = GithubRepoRepositoryImpl(
-                RoomGithubRepositoriesCache(
+                GithubRepoCacheRepositoryImpl(
                     App.instance.appComponent.networkStatus(),
                     App.instance.appComponent.retrofit(),
                     App.instance.appComponent.db()

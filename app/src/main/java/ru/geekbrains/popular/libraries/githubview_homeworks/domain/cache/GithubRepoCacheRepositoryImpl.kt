@@ -10,7 +10,7 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.remote.RetrofitServi
 import ru.geekbrains.popular.libraries.githubview_homeworks.remote.connectivity.NetworkStatus
 import javax.inject.Inject
 
-class RoomGithubRepositoriesCache @Inject constructor(
+class GithubRepoCacheRepositoryImpl @Inject constructor(
     private val networkStatus: NetworkStatus,
     private val retrofitService: RetrofitService,
     private val db: AppDatabase
