@@ -11,7 +11,8 @@ import moxy.ktx.moxyPresenter
 import ru.geekbrains.popular.libraries.githubview_homeworks.App
 import ru.geekbrains.popular.libraries.githubview_homeworks.databinding.FragmentUsersBinding
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubUsersRepositoryImpl
-import ru.geekbrains.popular.libraries.githubview_homeworks.domain.cache.GithubUsersCacheRepositoryImpl
+import ru.geekbrains.popular.libraries.githubview_homeworks.domain.cache.GithubUsersCacheImpl
+import ru.geekbrains.popular.libraries.githubview_homeworks.domain.retrofit.GithubUsersRetrofitImpl
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.main.MainActivity
@@ -25,16 +26,19 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
     private var mainActivity: MainActivity? = null
     private val presenter by moxyPresenter {
         UsersPresenter(
-            App.instance.appComponent.routerInstance(),
-            GithubUsersRepositoryImpl(
-                GithubUsersCacheRepositoryImpl(
-                    App.instance.appComponent.networkStatus(),
-                    App.instance.appComponent.retrofit(),
-                    App.instance.appComponent.db()
+            router = App.instance.appComponent.routerInstance(),
+            usersRepository = GithubUsersRepositoryImpl(
+                networkStatus = App.instance.appComponent.networkStatus(),
+                GithubUsersRetrofitImpl(
+                    retrofitService = App.instance.appComponent.retrofit(),
+                    db = App.instance.appComponent.db()
                 ),
+                GithubUsersCacheImpl(
+                    db = App.instance.appComponent.db()
+                )
             ),
-            App.instance.appComponent.networkStatus(),
-            App.instance.appComponent.appScreens()
+            networkStatus = App.instance.appComponent.networkStatus(),
+            appScreens = App.instance.appComponent.appScreens()
         )
     }
 
@@ -42,6 +46,7 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
     private var _binding: FragmentUsersBinding? = null
     private val binding
         get() = _binding!!
+
     // adapter
     private val adapter by lazy {
         UsersAdapter(

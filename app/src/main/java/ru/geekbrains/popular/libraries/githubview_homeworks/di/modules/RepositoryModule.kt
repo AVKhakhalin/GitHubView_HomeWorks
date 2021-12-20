@@ -7,10 +7,14 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubRepoRep
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubRepoRepositoryImpl
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubUsersRepository
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubUsersRepositoryImpl
-import ru.geekbrains.popular.libraries.githubview_homeworks.domain.cache.GithubRepoCacheRepository
-import ru.geekbrains.popular.libraries.githubview_homeworks.domain.cache.GithubUsersCacheRepository
-import ru.geekbrains.popular.libraries.githubview_homeworks.domain.cache.GithubRepoCacheRepositoryImpl
-import ru.geekbrains.popular.libraries.githubview_homeworks.domain.cache.GithubUsersCacheRepositoryImpl
+import ru.geekbrains.popular.libraries.githubview_homeworks.domain.cache.GithubRepoCache
+import ru.geekbrains.popular.libraries.githubview_homeworks.domain.cache.GithubRepoCacheImpl
+import ru.geekbrains.popular.libraries.githubview_homeworks.domain.cache.GithubUsersCache
+import ru.geekbrains.popular.libraries.githubview_homeworks.domain.cache.GithubUsersCacheImpl
+import ru.geekbrains.popular.libraries.githubview_homeworks.domain.retrofit.GithubRepoRetrofit
+import ru.geekbrains.popular.libraries.githubview_homeworks.domain.retrofit.GithubRepoRetrofitImpl
+import ru.geekbrains.popular.libraries.githubview_homeworks.domain.retrofit.GithubUsersRetrofit
+import ru.geekbrains.popular.libraries.githubview_homeworks.domain.retrofit.GithubUsersRetrofitImpl
 import ru.geekbrains.popular.libraries.githubview_homeworks.remote.RetrofitService
 import ru.geekbrains.popular.libraries.githubview_homeworks.remote.connectivity.NetworkStatus
 import javax.inject.Singleton
@@ -21,36 +25,54 @@ class RepositoryModule {
     @Singleton
     @Provides
     fun usersRepo(
-        usersRepoCache: GithubUsersCacheRepository
+        networkStatus: NetworkStatus,
+        githubUsersRetrofit: GithubUsersRetrofit,
+        githubUsersCache: GithubUsersCache
     ): GithubUsersRepository {
-        return GithubUsersRepositoryImpl(usersRepoCache)
+        return GithubUsersRepositoryImpl(networkStatus, githubUsersRetrofit, githubUsersCache)
     }
 
     @Singleton
     @Provides
-    fun usersRepoCache(
-        networkStatus: NetworkStatus,
+    fun usersRetrofit(
         retrofitService: RetrofitService,
         db: AppDatabase
-    ): GithubUsersCacheRepository {
-        return GithubUsersCacheRepositoryImpl(networkStatus, retrofitService, db)
+    ): GithubUsersRetrofit {
+        return GithubUsersRetrofitImpl(retrofitService, db)
+    }
+
+    @Singleton
+    @Provides
+    fun usersCache(
+        db: AppDatabase
+    ): GithubUsersCache {
+        return GithubUsersCacheImpl(db)
     }
 
     @Singleton
     @Provides
     fun reposRepo(
-        reposRepoCache: GithubRepoCacheRepository
+        networkStatus: NetworkStatus,
+        githubRepoRetrofit: GithubRepoRetrofit,
+        githubRepoCache: GithubRepoCache
     ): GithubRepoRepository {
-        return GithubRepoRepositoryImpl(reposRepoCache)
+        return GithubRepoRepositoryImpl(networkStatus, githubRepoRetrofit, githubRepoCache)
     }
 
     @Singleton
     @Provides
-    fun reposRepoCache(
-        networkStatus: NetworkStatus,
+    fun reposRetrofit(
         retrofitService: RetrofitService,
         db: AppDatabase
-    ): GithubRepoCacheRepository {
-        return GithubRepoCacheRepositoryImpl(networkStatus, retrofitService, db)
+    ): GithubRepoRetrofit {
+        return GithubRepoRetrofitImpl(retrofitService, db)
+    }
+
+    @Singleton
+    @Provides
+    fun reposCache(
+        db: AppDatabase
+    ): GithubRepoCache {
+        return GithubRepoCacheImpl(db)
     }
 }

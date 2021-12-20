@@ -27,12 +27,14 @@ class UsersPresenter @Inject constructor(
     private val usersRepository: GithubUsersRepository,
     private val networkStatus: NetworkStatus,
     private val appScreens: AppScreens
-) : MvpPresenter<UsersView>() {
+): MvpPresenter<UsersView>() {
     /** ИСХОДНЫЕ ДАННЫЕ */ //region
     // users
     private var users: List<GithubUserModel> = listOf()
+
     // mainActivity
     private var mainActivity: MainActivity? = null
+
     // usersListPresenter
     val usersListPresenter = UsersListPresenter(mainActivity, networkStatus)
     //endregion
@@ -86,7 +88,7 @@ class UsersPresenter @Inject constructor(
         return true
     }
 
-    class UsersListPresenter(mainActivity: MainActivity?, networkStatus: NetworkStatus):
+    class UsersListPresenter(mainActivity: MainActivity?, networkStatus: NetworkStatus) :
         IListPresenter<UserItemView> {
 
         var users: MutableList<GithubUserModel> = mutableListOf<GithubUserModel>()

@@ -19,10 +19,8 @@ class MainActivity : MvpAppCompatActivity(R.layout.activity_main), MainView {
     /** Задание переменных */ //region
     // navigatorHolder
     var navigatorHolder: NavigatorHolder = App.instance.appComponent.navigationHolder()
-
     // navigator
     private val navigator = AppNavigator(this@MainActivity, R.id.container)
-
     // moxyPresenter
     private val presenter by moxyPresenter {
         MainPresenter(
@@ -30,12 +28,10 @@ class MainActivity : MvpAppCompatActivity(R.layout.activity_main), MainView {
             App.instance.appComponent.appScreens()
         )
     }
-
     // githubUserModel
     private var githubUserModel: GithubUserModel =
         GithubUserModel("", "", "", "")
     private var users: List<GithubUserModel> = listOf()
-
     // githubRepoModel
     private var githubRepoModel: GithubRepoModel =
         GithubRepoModel("", "", GithubRepoOwner(""), 0)
@@ -45,9 +41,7 @@ class MainActivity : MvpAppCompatActivity(R.layout.activity_main), MainView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         App.instance.appComponent.injectMainActivity(this@MainActivity)
-
-        Producer().execFlatMap()
-
+//        Producer().execFlatMap()
         /** Получение разрешений на запись информации */
         presenter.isStoragePermissionGranted(this@MainActivity)
     }

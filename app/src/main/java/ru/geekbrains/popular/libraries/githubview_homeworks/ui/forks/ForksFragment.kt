@@ -19,6 +19,7 @@ class ForksFragment : MvpAppCompatFragment(), ForksView, BackButtonListener {
     private var _binding: FragmentForksBinding? = null
     private val binding
         get() = _binding!!
+
     // presenter
     private val presenter by moxyPresenter {
         ForksPresenter(App.instance.appComponent.routerInstance())

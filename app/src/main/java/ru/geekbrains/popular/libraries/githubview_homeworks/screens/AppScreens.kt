@@ -11,7 +11,7 @@ interface AppScreens {
     fun forksScreen(): FragmentScreen
 }
 
-class AppScreensImpl: AppScreens {
+class AppScreensImpl : AppScreens {
     /** Вызов фрагмента со списком логинов пользователей */
     override fun usersScreen() = FragmentScreen {
         UsersFragment.newInstance()

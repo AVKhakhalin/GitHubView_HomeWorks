@@ -15,7 +15,7 @@ import javax.inject.Inject
 class ReposPresenter @Inject constructor(
     private val router: Router,
     private val repo: GithubRepoRepository,
-): MvpPresenter<ReposView>() {
+) : MvpPresenter<ReposView>() {
     /** ИСХОДНЫЕ ДАННЫЕ */ //region
     // mainActivity
     private var mainActivity: MainActivity? = null
