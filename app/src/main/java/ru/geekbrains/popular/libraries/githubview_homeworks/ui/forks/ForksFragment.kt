@@ -1,7 +1,6 @@
 package ru.geekbrains.popular.libraries.githubview_homeworks.ui.forks
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +9,8 @@ import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.geekbrains.popular.libraries.githubview_homeworks.App
 import ru.geekbrains.popular.libraries.githubview_homeworks.databinding.FragmentForksBinding
+import ru.geekbrains.popular.libraries.githubview_homeworks.domain.UserChooseRepository
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
-import ru.geekbrains.popular.libraries.githubview_homeworks.ui.main.MainActivity
 
 class ForksFragment : MvpAppCompatFragment(), ForksView, BackButtonListener {
     /** ЗАДАНИЕ ПЕРЕМЕННЫХ */ //region
@@ -19,23 +18,16 @@ class ForksFragment : MvpAppCompatFragment(), ForksView, BackButtonListener {
     private var _binding: FragmentForksBinding? = null
     private val binding
         get() = _binding!!
-
     // presenter
     private val presenter by moxyPresenter {
         App.instance.appComponent.forksPresenter()
     }
-
-    // mainActivity
-    private var mainActivity: MainActivity? = null
+    // userChoose
+    private val userChoose: UserChooseRepository = App.instance.appComponent.userChoose()
     //endregion
 
     companion object {
         fun newInstance() = ForksFragment()
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        mainActivity = (context as MainActivity)
     }
 
     override fun onCreateView(
@@ -50,35 +42,23 @@ class ForksFragment : MvpAppCompatFragment(), ForksView, BackButtonListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mainActivity?.let { mainActivity ->
-            mainActivity.getGithubUserModel()?.let { userModel ->
-                binding.repoTitle.text =
-                    "Информация о репозитории пользователя \"${userModel.login}\":"
-            }
-            mainActivity.getGithubRepoModel()?.let { repoModel ->
-                binding.repoId.text = "ID: ${repoModel.id}"
-                binding.repoName.text = "${repoModel.name}"
-                binding.repoOwnerId.text = "ID владельца: ${repoModel.owner.id}"
-                binding.forksNumber.text = "Количество форков: ${repoModel.forksCount}"
-            }
-        }
+        binding.repoTitle.text =
+            "Информация о репозитории пользователя \"${userChoose.getGithubUserModel().login}\":"
+        binding.repoId.text = "ID: ${userChoose.getGithubRepoModel().id}"
+        binding.repoName.text = "${userChoose.getGithubRepoModel().name}"
+        binding.repoOwnerId.text = "ID владельца: ${userChoose.getGithubRepoModel().owner.id}"
+        binding.forksNumber.text = "Количество форков: ${userChoose.getGithubRepoModel().forksCount}"
     }
 
     override fun onResume() {
         super.onResume()
 
-        mainActivity?.let { mainActivity ->
-            mainActivity.getGithubUserModel()?.let { userModel ->
-                binding.repoTitle.text =
-                    "Информация о репозитории пользователя \"${userModel.login}\":"
-            }
-            mainActivity.getGithubRepoModel()?.let { repoModel ->
-                binding.repoId.text = "ID: ${repoModel.id}"
-                binding.repoName.text = "${repoModel.name}"
-                binding.repoOwnerId.text = "ID владельца: ${repoModel.owner.id}"
-                binding.forksNumber.text = "Количество форков: ${repoModel.forksCount}"
-            }
-        }
+        binding.repoTitle.text =
+            "Информация о репозитории пользователя \"${userChoose.getGithubUserModel().login}\":"
+        binding.repoId.text = "ID: ${userChoose.getGithubRepoModel().id}"
+        binding.repoName.text = "${userChoose.getGithubRepoModel().name}"
+        binding.repoOwnerId.text = "ID владельца: ${userChoose.getGithubRepoModel().owner.id}"
+        binding.forksNumber.text = "Количество форков: ${userChoose.getGithubRepoModel().forksCount}"
     }
 
     override fun backPressed(): Boolean {

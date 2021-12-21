@@ -1,5 +1,6 @@
 package ru.geekbrains.popular.libraries.githubview_homeworks.ui.users
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.os.Environment
 import android.util.Log
@@ -11,12 +12,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import moxy.MvpPresenter
+import ru.geekbrains.popular.libraries.githubview_homeworks.App
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubUsersRepository
+import ru.geekbrains.popular.libraries.githubview_homeworks.domain.UserChooseRepository
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.remote.connectivity.NetworkStatus
 import ru.geekbrains.popular.libraries.githubview_homeworks.screens.AppScreens
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.IListPresenter
-import ru.geekbrains.popular.libraries.githubview_homeworks.ui.main.MainActivity
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
@@ -28,20 +30,14 @@ class UsersPresenter @Inject constructor(
     private val networkStatus: NetworkStatus,
     private val appScreens: AppScreens
 ): MvpPresenter<UsersView>() {
-    /** ИСХОДНЫЕ ДАННЫЕ */ //region
+    /** Исходные данные */ //region
     // users
     private var users: List<GithubUserModel> = listOf()
-
-    // mainActivity
-    private var mainActivity: MainActivity? = null
-
+    // userChoose
+    private val userChoose: UserChooseRepository = App.instance.appComponent.userChoose()
     // usersListPresenter
-    val usersListPresenter = UsersListPresenter(mainActivity, networkStatus)
+    val usersListPresenter = UsersListPresenter(App.instance.applicationContext, networkStatus)
     //endregion
-
-    fun setMainActivity(mainActivity: MainActivity?) {
-        this.mainActivity = mainActivity
-    }
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -55,10 +51,8 @@ class UsersPresenter @Inject constructor(
                 users[userItemView.pos].avatarUrl,
                 users[userItemView.pos].reposUrl
             )
-            mainActivity?.let { mainActivity ->
-                mainActivity.setGithubUserModel(userModel)
-                mainActivity.setUsersModel(users)
-            }
+            userChoose.setGithubUserModel(userModel)
+            userChoose.setUsersModel(users)
             router.navigateTo(appScreens.repoScreen())
         }
     }
@@ -71,9 +65,7 @@ class UsersPresenter @Inject constructor(
             .subscribe(
                 { users ->
                     this.users = users
-                    mainActivity?.let { mainActivity ->
-                        mainActivity.setUsersModel(users)
-                    }
+                    userChoose.setUsersModel(users)
                     viewState.updateList(users)
                     viewState.hideLoading()
                 }, { e ->
@@ -88,13 +80,15 @@ class UsersPresenter @Inject constructor(
         return true
     }
 
-    class UsersListPresenter(mainActivity: MainActivity?, networkStatus: NetworkStatus) :
-        IListPresenter<UserItemView> {
+    class UsersListPresenter @Inject constructor(
+        context: Context,
+        networkStatus: NetworkStatus
+): IListPresenter<UserItemView> {
 
         var users: MutableList<GithubUserModel> = mutableListOf<GithubUserModel>()
         private var file: File = File("")
         private val networkStatus: NetworkStatus = networkStatus
-        private val mainActivity: MainActivity? = mainActivity
+        private val context: Context = context
 
         override var itemClickListener: (UserItemView) -> Unit = {}
 
@@ -106,49 +100,42 @@ class UsersPresenter @Inject constructor(
 
             if (networkStatus.isOnline()) {
                 view.setAvatar(user.avatarUrl)
-                mainActivity?.let { mainActivity ->
-                    file = File(
-                        "${
-                            mainActivity.getExternalFilesDir(
-                                Environment.DIRECTORY_PICTURES
-                            )
-                        }/CacheAvatars/${user.login}"
+                file = File(
+                    "${context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+                    }/CacheAvatars/${user.login}"
+                )
+
+                /** Сохранение картинки в локальную папку с данным приложением */
+                /** Создание директории, если она ещё не создана */
+                if (!file.exists()) {
+                    file.mkdirs()
+                }
+                file = File(file, "${user.login}.jpg")
+                /** Создание файла */
+                file.createNewFile()
+
+                CoroutineScope(Dispatchers.IO).launch {
+                    saveImage(
+                        Glide.with(context)
+                            .asBitmap()
+                            .load(user.avatarUrl)
+                            .placeholder(android.R.drawable.progress_indeterminate_horizontal)
+                            .error(android.R.drawable.stat_notify_error)
+                            .submit()
+                            .get(), file
                     )
-
-                    /** Сохранение картинки в локальную папку с данным приложением */
-                    /** Создание директории, если она ещё не создана */
-                    if (!file.exists()) {
-                        file.mkdirs()
-                    }
-                    file = File(file, "${user.login}.jpg")
-                    /** Создание файла */
-                    file.createNewFile()
-
-                    CoroutineScope(Dispatchers.IO).launch {
-                        saveImage(
-                            Glide.with(mainActivity)
-                                .asBitmap()
-                                .load(user.avatarUrl)
-                                .placeholder(android.R.drawable.progress_indeterminate_horizontal)
-                                .error(android.R.drawable.stat_notify_error)
-                                .submit()
-                                .get(), file
-                        )
-                    }
                 }
             } else {
-                mainActivity?.let { mainActivity ->
-                    file = File(
-                        "${
-                            mainActivity.getExternalFilesDir(
-                                Environment.DIRECTORY_PICTURES
-                            )
-                        }/CacheAvatars/${user.login}"
-                    )
-                    file = File(file, "${user.login}.jpg")
-                    if ((file.exists()) && (file.length() > 0)) {
-                        view.setAvatar(file.toString())
-                    }
+                file = File(
+                    "${
+                        context.getExternalFilesDir(
+                            Environment.DIRECTORY_PICTURES
+                        )
+                    }/CacheAvatars/${user.login}"
+                )
+                file = File(file, "${user.login}.jpg")
+                if ((file.exists()) && (file.length() > 0)) {
+                    view.setAvatar(file.toString())
                 }
             }
         }

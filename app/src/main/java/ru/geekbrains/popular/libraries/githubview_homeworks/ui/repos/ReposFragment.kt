@@ -1,7 +1,6 @@
 package ru.geekbrains.popular.libraries.githubview_homeworks.ui.repos
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,35 +10,27 @@ import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.geekbrains.popular.libraries.githubview_homeworks.App
 import ru.geekbrains.popular.libraries.githubview_homeworks.databinding.FragmentReposBinding
+import ru.geekbrains.popular.libraries.githubview_homeworks.domain.UserChooseRepository
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubRepoModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
-import ru.geekbrains.popular.libraries.githubview_homeworks.ui.main.MainActivity
 
-class ReposFragment : MvpAppCompatFragment(), ReposView, BackButtonListener {
+class ReposFragment: MvpAppCompatFragment(), ReposView, BackButtonListener {
     /** ЗАДАНИЕ ПЕРЕМЕННЫХ */ //region
-    // mainActivity
-    private var mainActivity: MainActivity? = null
-
+    // userChoose
+    private val userChoose: UserChooseRepository = App.instance.appComponent.userChoose()
     // presenter
     private val presenter by moxyPresenter {
         App.instance.appComponent.reposPresenter()
     }
-
     // binding
     private var _binding: FragmentReposBinding? = null
     private val binding
         get() = _binding!!
-
     // adapter
     private val adapter by lazy {
         ReposAdapter { presenter.onRepoClicked(it) }
     }
     //endregion
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        mainActivity = (context as MainActivity)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,15 +45,9 @@ class ReposFragment : MvpAppCompatFragment(), ReposView, BackButtonListener {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        /** Установка в ReposPresenter MainActivity */
-        presenter.setMainActivity(mainActivity)
         /** Установка заголовка окна */
-        mainActivity?.let { mainActivity ->
-            mainActivity.getGithubUserModel()?.let { userModel ->
-                binding.reposTitle.text =
-                    "Список репозиториев\nпользователя \"${userModel.login}\":"
-            }
-        }
+        binding.reposTitle.text =
+            "Список репозиториев\nпользователя \"${userChoose.getGithubUserModel().login}\":"
         /** Установка списка репозиториев пользователя */
         binding.reposRecycler.layoutManager = LinearLayoutManager(requireContext())
         binding.reposRecycler.adapter = adapter
@@ -89,19 +74,11 @@ class ReposFragment : MvpAppCompatFragment(), ReposView, BackButtonListener {
         fun newInstance() = ReposFragment()
     }
 
-    fun getMainActivity(): MainActivity? {
-        return mainActivity
-    }
-
     override fun onResume() {
         super.onResume()
 
-        mainActivity?.let { mainActivity ->
-            mainActivity.getGithubUserModel()?.let { userModel ->
-                binding.reposTitle.text =
-                    "Список репозиториев\nпользователя \"${userModel.login}\":"
-            }
-        }
+        binding.reposTitle.text =
+            "Список репозиториев\nпользователя \"${userChoose.getGithubUserModel().login}\":"
         binding.reposRecycler.layoutManager = LinearLayoutManager(requireContext())
         binding.reposRecycler.adapter = adapter
     }

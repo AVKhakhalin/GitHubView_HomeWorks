@@ -15,7 +15,7 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserMode
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
 import javax.inject.Inject
 
-class MainActivity : MvpAppCompatActivity(R.layout.activity_main), MainView {
+class MainActivity: MvpAppCompatActivity(R.layout.activity_main), MainView {
     /** Задание переменных */ //region
     // navigatorHolder
     @Inject
@@ -39,6 +39,7 @@ class MainActivity : MvpAppCompatActivity(R.layout.activity_main), MainView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         App.instance.appComponent.injectMainActivity(this@MainActivity)
+        /** Нужно снять комментарий для проверки домашнего задания */
 //        Producer().execFlatMap()
         /** Получение разрешений на запись информации */
         presenter.isStoragePermissionGranted(this@MainActivity)
@@ -62,41 +63,6 @@ class MainActivity : MvpAppCompatActivity(R.layout.activity_main), MainView {
         }
         presenter.backPressed()
     }
-
-    /** Получение и установка моделей */ //region
-    fun setGithubUserModel(githubUserModel: GithubUserModel) {
-        this.githubUserModel = githubUserModel
-    }
-
-    fun setUsersModel(users: List<GithubUserModel>) {
-        this.users = users
-    }
-
-    fun getGithubUserModel(): GithubUserModel {
-        return githubUserModel
-    }
-
-    fun getUsersModel(): List<GithubUserModel> {
-        return users
-    }
-
-    fun setGithubRepoModel(githubRepoModel: GithubRepoModel) {
-        this.githubRepoModel = githubRepoModel
-    }
-
-    fun setReposModel(repos: List<GithubRepoModel>) {
-        this.repos = repos
-    }
-
-    fun getGithubRepoModel(): GithubRepoModel {
-        return githubRepoModel
-    }
-
-    fun getReposModel(): List<GithubRepoModel> {
-        return repos
-    }
-    //endregion
-
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)

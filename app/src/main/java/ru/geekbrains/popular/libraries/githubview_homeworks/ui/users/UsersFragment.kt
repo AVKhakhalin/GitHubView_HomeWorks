@@ -1,6 +1,5 @@
 package ru.geekbrains.popular.libraries.githubview_homeworks.ui.users
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,27 +9,25 @@ import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.geekbrains.popular.libraries.githubview_homeworks.App
 import ru.geekbrains.popular.libraries.githubview_homeworks.databinding.FragmentUsersBinding
+import ru.geekbrains.popular.libraries.githubview_homeworks.domain.UserChooseRepository
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
-import ru.geekbrains.popular.libraries.githubview_homeworks.ui.main.MainActivity
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.users.adapter.UsersAdapter
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.utils.GlideImageLoader
 
-class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
+class UsersFragment: MvpAppCompatFragment(), UsersView, BackButtonListener {
 
     /** Задание переменных */ //region
-    // mainActivity
-    private var mainActivity: MainActivity? = null
+    // userChoose
+    private val userChoose: UserChooseRepository = App.instance.appComponent.userChoose()
     // presenter
     private val presenter by moxyPresenter {
         App.instance.appComponent.usersPresenter()
     }
-
     // binding
     private var _binding: FragmentUsersBinding? = null
     private val binding
         get() = _binding!!
-
     // adapter
     private val adapter by lazy {
         UsersAdapter(
@@ -44,12 +41,6 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
         fun newInstance() = UsersFragment()
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-        mainActivity = (context as MainActivity)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -61,8 +52,6 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        /** Установка mainActivity в UsersPresenter */
-        presenter.setMainActivity(mainActivity)
         /** Установка списка пользователей */
         binding.usersListRecycler.layoutManager = LinearLayoutManager(requireContext())
         binding.usersListRecycler.adapter = adapter
@@ -95,10 +84,6 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
     override fun onResume() {
         super.onResume()
 
-        mainActivity?.let { mainActivity ->
-            mainActivity.getUsersModel()?.let { users ->
-                presenter.setUsers(users)
-            }
-        }
+        presenter.setUsers(userChoose.getUsersModel())
     }
 }
