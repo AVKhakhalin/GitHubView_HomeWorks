@@ -5,9 +5,9 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.db.AppDatabase
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
 import javax.inject.Inject
 
-class GithubUsersCacheImpl @Inject constructor(
+class GithubUsersCacheImpl (
     private val db: AppDatabase
-) : GithubUsersCache {
+): GithubUsersCache {
     override fun getCacheUsers(): Single<List<GithubUserModel>> {
         return Single.fromCallable {
             db.userDao.getAll().map { roomModel ->

@@ -22,8 +22,8 @@ import javax.inject.Singleton
 @Module
 class RepositoryModule {
 
-    @Singleton
     @Provides
+    @Singleton
     fun usersRepo(
         networkStatus: NetworkStatus,
         githubUsersRetrofit: GithubUsersRetrofit,
@@ -32,8 +32,8 @@ class RepositoryModule {
         return GithubUsersRepositoryImpl(networkStatus, githubUsersRetrofit, githubUsersCache)
     }
 
-    @Singleton
     @Provides
+    @Singleton
     fun usersRetrofit(
         retrofitService: RetrofitService,
         db: AppDatabase
@@ -41,16 +41,16 @@ class RepositoryModule {
         return GithubUsersRetrofitImpl(retrofitService, db)
     }
 
-    @Singleton
     @Provides
+    @Singleton
     fun usersCache(
         db: AppDatabase
     ): GithubUsersCache {
         return GithubUsersCacheImpl(db)
     }
 
-    @Singleton
     @Provides
+    @Singleton
     fun reposRepo(
         networkStatus: NetworkStatus,
         githubRepoRetrofit: GithubRepoRetrofit,
@@ -59,8 +59,8 @@ class RepositoryModule {
         return GithubRepoRepositoryImpl(networkStatus, githubRepoRetrofit, githubRepoCache)
     }
 
-    @Singleton
     @Provides
+    @Singleton
     fun reposRetrofit(
         retrofitService: RetrofitService,
         db: AppDatabase
@@ -68,8 +68,8 @@ class RepositoryModule {
         return GithubRepoRetrofitImpl(retrofitService, db)
     }
 
-    @Singleton
     @Provides
+    @Singleton
     fun reposCache(
         db: AppDatabase
     ): GithubRepoCache {

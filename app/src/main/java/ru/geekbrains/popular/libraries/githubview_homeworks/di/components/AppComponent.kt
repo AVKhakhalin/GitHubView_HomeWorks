@@ -1,19 +1,18 @@
 package ru.geekbrains.popular.libraries.githubview_homeworks.di.components
 
 import com.github.terrakok.cicerone.NavigatorHolder
-import com.github.terrakok.cicerone.Router
 import dagger.Component
+import dagger.Provides
 import ru.geekbrains.popular.libraries.githubview_homeworks.db.AppDatabase
-import ru.geekbrains.popular.libraries.githubview_homeworks.di.modules.CacheModule
-import ru.geekbrains.popular.libraries.githubview_homeworks.di.modules.CiceroneModule
-import ru.geekbrains.popular.libraries.githubview_homeworks.di.modules.ContextModule
-import ru.geekbrains.popular.libraries.githubview_homeworks.di.modules.NetworkModule
+import ru.geekbrains.popular.libraries.githubview_homeworks.di.modules.*
 import ru.geekbrains.popular.libraries.githubview_homeworks.remote.RetrofitService
 import ru.geekbrains.popular.libraries.githubview_homeworks.remote.connectivity.NetworkStatus
 import ru.geekbrains.popular.libraries.githubview_homeworks.screens.AppScreens
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.forks.ForksPresenter
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.main.MainActivity
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.main.MainPresenter
+import ru.geekbrains.popular.libraries.githubview_homeworks.ui.repos.ReposPresenter
+import ru.geekbrains.popular.libraries.githubview_homeworks.ui.users.UsersPresenter
 import javax.inject.Singleton
 
 @Singleton
@@ -22,25 +21,17 @@ import javax.inject.Singleton
         CiceroneModule::class,
         ContextModule::class,
         NetworkModule::class,
-        CacheModule::class
+        CacheModule::class,
+        RepositoryModule::class
     ]
 )
 
 interface AppComponent {
 
-    fun injectMainActivity(mainActivity: MainActivity)
-
-    fun routerInstance(): Router
-    fun navigationHolder(): NavigatorHolder
-
     fun mainPresenter(): MainPresenter
     fun forksPresenter(): ForksPresenter
+    fun usersPresenter(): UsersPresenter
+    fun reposPresenter(): ReposPresenter
 
-    fun networkStatus(): NetworkStatus
-
-    fun db(): AppDatabase
-    fun retrofit(): RetrofitService
-
-    fun appScreens(): AppScreens
-
+    fun injectMainActivity(mainActivity: MainActivity)
 }

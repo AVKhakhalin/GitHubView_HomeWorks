@@ -6,12 +6,11 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.db.model.RoomGithubR
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubRepoModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.remote.RetrofitService
-import javax.inject.Inject
 
-class GithubRepoRetrofitImpl @Inject constructor(
+class GithubRepoRetrofitImpl (
     private val retrofitService: RetrofitService,
     private val db: AppDatabase
-) : GithubRepoRetrofit {
+): GithubRepoRetrofit {
     override fun getRetrofitRepo(userModel: GithubUserModel): Single<List<GithubRepoModel>> {
         return retrofitService.getRepos(userModel.reposUrl).flatMap { repos ->
             Single.fromCallable {

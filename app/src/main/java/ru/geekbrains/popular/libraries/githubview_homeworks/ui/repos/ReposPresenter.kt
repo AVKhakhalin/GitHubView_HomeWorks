@@ -9,12 +9,14 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.App
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubRepoRepository
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubRepoModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
+import ru.geekbrains.popular.libraries.githubview_homeworks.screens.AppScreens
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.main.MainActivity
 import javax.inject.Inject
 
 class ReposPresenter @Inject constructor(
     private val router: Router,
     private val repo: GithubRepoRepository,
+    private val appScreens: AppScreens
 ) : MvpPresenter<ReposView>() {
     /** ИСХОДНЫЕ ДАННЫЕ */ //region
     // mainActivity
@@ -61,7 +63,7 @@ class ReposPresenter @Inject constructor(
         mainActivity?.let { mainActivity ->
             mainActivity.setGithubRepoModel(repo)
         }
-        router.navigateTo(App.instance.appComponent.appScreens().forksScreen())
+        router.navigateTo(appScreens.forksScreen())
     }
 
     fun backPressed(): Boolean {

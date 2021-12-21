@@ -12,7 +12,7 @@ import javax.inject.Inject
 class MainPresenter @Inject constructor(
     private val router: Router,
     private val appScreens: AppScreens
-) : MvpPresenter<MainView>() {
+): MvpPresenter<MainView>() {
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()

@@ -12,21 +12,19 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.R
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubRepoModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubRepoOwner
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
-import ru.geekbrains.popular.libraries.githubview_homeworks.switchmap.Producer
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
+import javax.inject.Inject
 
 class MainActivity : MvpAppCompatActivity(R.layout.activity_main), MainView {
     /** Задание переменных */ //region
     // navigatorHolder
-    var navigatorHolder: NavigatorHolder = App.instance.appComponent.navigationHolder()
+    @Inject
+    lateinit var navigatorHolder: NavigatorHolder
     // navigator
     private val navigator = AppNavigator(this@MainActivity, R.id.container)
     // moxyPresenter
     private val presenter by moxyPresenter {
-        MainPresenter(
-            App.instance.appComponent.routerInstance(),
-            App.instance.appComponent.appScreens()
-        )
+        App.instance.appComponent.mainPresenter()
     }
     // githubUserModel
     private var githubUserModel: GithubUserModel =

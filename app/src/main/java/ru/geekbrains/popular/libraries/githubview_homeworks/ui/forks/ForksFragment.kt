@@ -22,7 +22,7 @@ class ForksFragment : MvpAppCompatFragment(), ForksView, BackButtonListener {
 
     // presenter
     private val presenter by moxyPresenter {
-        ForksPresenter(App.instance.appComponent.routerInstance())
+        App.instance.appComponent.forksPresenter()
     }
 
     // mainActivity

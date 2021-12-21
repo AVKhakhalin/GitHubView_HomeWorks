@@ -6,13 +6,12 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.domain.retrofit.Gith
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubRepoModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.remote.connectivity.NetworkStatus
-import javax.inject.Inject
 
-class GithubRepoRepositoryImpl @Inject constructor(
+class GithubRepoRepositoryImpl (
     private val networkStatus: NetworkStatus,
     private val githubRepoRetrofit: GithubRepoRetrofit,
     private val githubRepoCache: GithubRepoCache
-) : GithubRepoRepository {
+): GithubRepoRepository {
     override fun getRepos(userModel: GithubUserModel): Single<List<GithubRepoModel>> {
         return if (networkStatus.isOnline())
             githubRepoRetrofit.getRetrofitRepo(userModel)

@@ -10,9 +10,6 @@ import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.geekbrains.popular.libraries.githubview_homeworks.App
 import ru.geekbrains.popular.libraries.githubview_homeworks.databinding.FragmentUsersBinding
-import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubUsersRepositoryImpl
-import ru.geekbrains.popular.libraries.githubview_homeworks.domain.cache.GithubUsersCacheImpl
-import ru.geekbrains.popular.libraries.githubview_homeworks.domain.retrofit.GithubUsersRetrofitImpl
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.main.MainActivity
@@ -24,22 +21,9 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
     /** Задание переменных */ //region
     // mainActivity
     private var mainActivity: MainActivity? = null
+    // presenter
     private val presenter by moxyPresenter {
-        UsersPresenter(
-            router = App.instance.appComponent.routerInstance(),
-            usersRepository = GithubUsersRepositoryImpl(
-                networkStatus = App.instance.appComponent.networkStatus(),
-                GithubUsersRetrofitImpl(
-                    retrofitService = App.instance.appComponent.retrofit(),
-                    db = App.instance.appComponent.db()
-                ),
-                GithubUsersCacheImpl(
-                    db = App.instance.appComponent.db()
-                )
-            ),
-            networkStatus = App.instance.appComponent.networkStatus(),
-            appScreens = App.instance.appComponent.appScreens()
-        )
+        App.instance.appComponent.usersPresenter()
     }
 
     // binding
