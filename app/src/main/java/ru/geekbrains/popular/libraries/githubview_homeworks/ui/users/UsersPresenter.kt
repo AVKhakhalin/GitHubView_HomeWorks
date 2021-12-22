@@ -28,13 +28,12 @@ class UsersPresenter @Inject constructor(
     private val router: Router,
     private val usersRepository: GithubUsersRepository,
     private val networkStatus: NetworkStatus,
-    private val appScreens: AppScreens
+    private val appScreens: AppScreens,
+    private val userChoose: UserChooseRepository
 ): MvpPresenter<UsersView>() {
     /** Исходные данные */ //region
     // users
     private var users: List<GithubUserModel> = listOf()
-    // userChoose
-    private val userChoose: UserChooseRepository = App.instance.appComponent.userChoose()
     // usersListPresenter
     val usersListPresenter = UsersListPresenter(App.instance.applicationContext, networkStatus)
     //endregion

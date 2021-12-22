@@ -3,10 +3,7 @@ package ru.geekbrains.popular.libraries.githubview_homeworks.di.modules
 import dagger.Module
 import dagger.Provides
 import ru.geekbrains.popular.libraries.githubview_homeworks.db.AppDatabase
-import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubRepoRepository
-import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubRepoRepositoryImpl
-import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubUsersRepository
-import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubUsersRepositoryImpl
+import ru.geekbrains.popular.libraries.githubview_homeworks.domain.*
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.cache.GithubRepoCache
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.cache.GithubRepoCacheImpl
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.cache.GithubUsersCache
@@ -74,5 +71,11 @@ class RepositoryModule {
         db: AppDatabase
     ): GithubRepoCache {
         return GithubRepoCacheImpl(db)
+    }
+
+    @Provides
+    @Singleton
+    fun userChoose(): UserChooseRepository {
+        return UserChooseRepositoryImpl()
     }
 }

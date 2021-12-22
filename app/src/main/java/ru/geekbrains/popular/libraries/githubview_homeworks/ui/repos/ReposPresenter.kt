@@ -16,12 +16,9 @@ import javax.inject.Inject
 class ReposPresenter @Inject constructor(
     private val router: Router,
     private val repo: GithubRepoRepository,
-    private val appScreens: AppScreens
-) : MvpPresenter<ReposView>() {
-    /** ИСХОДНЫЕ ДАННЫЕ */ //region
-    // userChoose
-    private val userChoose: UserChooseRepository = App.instance.appComponent.userChoose()
-    //endregion
+    private val appScreens: AppScreens,
+    private val userChoose: UserChooseRepository
+): MvpPresenter<ReposView>() {
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()

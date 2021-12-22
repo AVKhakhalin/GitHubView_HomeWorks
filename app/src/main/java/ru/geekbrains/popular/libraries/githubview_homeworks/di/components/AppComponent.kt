@@ -17,8 +17,7 @@ import javax.inject.Singleton
         ContextModule::class,
         NetworkModule::class,
         CacheModule::class,
-        RepositoryModule::class,
-        UserChooseModule::class
+        RepositoryModule::class
     ]
 )
 
