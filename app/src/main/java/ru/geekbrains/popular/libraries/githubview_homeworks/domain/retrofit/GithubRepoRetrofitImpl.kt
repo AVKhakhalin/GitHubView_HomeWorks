@@ -12,14 +12,13 @@ class GithubRepoRetrofitImpl (
     private val db: AppDatabase
 ): GithubRepoRetrofit {
     override fun getRetrofitRepo(userModel: GithubUserModel): Single<List<GithubRepoModel>> {
-        return retrofitService.getRepos(userModel.reposUrl).flatMap { repos ->
-            Single.fromCallable {
+        return retrofitService.getRepos(userModel.reposUrl)
+            .flatMap { repos ->
                 val dbRepos = repos.map {
                     RoomGithubRepo(it.id, it.name, it.owner.id, it.forksCount)
                 }
                 db.repositoryDao.insert(dbRepos)
-                repos
-            }
+                    .toSingle{ repos }
         }
     }
 }

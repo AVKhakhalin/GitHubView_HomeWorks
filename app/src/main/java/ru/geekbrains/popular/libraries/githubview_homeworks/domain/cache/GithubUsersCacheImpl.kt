@@ -8,12 +8,11 @@ class GithubUsersCacheImpl (
     private val db: AppDatabase
 ): GithubUsersCache {
     override fun getCacheUsers(): Single<List<GithubUserModel>> {
-        return Single.fromCallable {
-            db.userDao.getAll().map { roomModel ->
-                GithubUserModel(
-                    roomModel.id, roomModel.login, roomModel.avatarUrl, roomModel.reposUrl
-                )
+        return db.userDao.getAll()
+            .map { roomModel ->
+                roomModel.map {
+                    GithubUserModel(it.id, it.login, it.avatarUrl, it.reposUrl)
+                }
             }
-        }
     }
 }

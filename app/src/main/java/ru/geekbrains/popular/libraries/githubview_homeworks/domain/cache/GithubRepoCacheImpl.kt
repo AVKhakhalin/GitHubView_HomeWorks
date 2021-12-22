@@ -10,10 +10,12 @@ class GithubRepoCacheImpl (
     private val db: AppDatabase
 ): GithubRepoCache {
     override fun getCacheRepo(userModel: GithubUserModel): Single<List<GithubRepoModel>> {
-        return Single.fromCallable {
-            db.repositoryDao.getByUserId(userModel.id).map {
-                GithubRepoModel(it.id, it.name, GithubRepoOwner(it.userId), it.forksCount)
-            }
-        }
+        return db.repositoryDao.getByUserId(userModel.id)
+                .map { list ->
+                    list.map { repo ->
+                        GithubRepoModel(
+                            repo.id, repo.name, GithubRepoOwner(repo.userId), repo.forksCount)
+                    }
+                }
     }
 }

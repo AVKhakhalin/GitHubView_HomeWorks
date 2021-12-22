@@ -13,13 +13,11 @@ class GithubUsersRetrofitImpl (
     override fun getRetrofitUsers(): Single<List<GithubUserModel>> {
         return retrofitService.getUsers()
             .flatMap { users ->
-                Single.fromCallable {
-                    val roomUsers = users.map { user ->
-                        RoomGithubUser(user.id, user.login, user.avatarUrl, user.reposUrl)
-                    }
-                    db.userDao.insert(roomUsers)
-                    users
+                val roomUsers = users.map { user ->
+                    RoomGithubUser(user.id, user.login, user.avatarUrl, user.reposUrl)
                 }
+                db.userDao.insert(roomUsers)
+                    .toSingle{users}
             }
     }
 }
