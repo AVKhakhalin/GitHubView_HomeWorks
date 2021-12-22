@@ -128,9 +128,7 @@ class UsersPresenter @Inject constructor(
             } else {
                 file = File(
                     "${
-                        context.getExternalFilesDir(
-                            Environment.DIRECTORY_PICTURES
-                        )
+                        context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
                     }/CacheAvatars/${user.login}"
                 )
                 file = File(file, "${user.login}.jpg")
