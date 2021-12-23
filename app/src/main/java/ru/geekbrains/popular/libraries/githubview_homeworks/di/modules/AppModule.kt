@@ -7,7 +7,7 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.App
 import javax.inject.Singleton
 
 @Module
-class ContextModule(private val app: App) {
+class AppModule(private val app: App) {
 
     @Singleton
     @Provides
