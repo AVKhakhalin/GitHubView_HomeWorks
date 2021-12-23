@@ -6,6 +6,7 @@ import android.os.Build
 import androidx.core.app.ActivityCompat
 import com.github.terrakok.cicerone.Router
 import moxy.MvpPresenter
+import ru.geekbrains.popular.libraries.githubview_homeworks.R
 import ru.geekbrains.popular.libraries.githubview_homeworks.screens.AppScreens
 import javax.inject.Inject
 
@@ -32,10 +33,12 @@ class MainPresenter @Inject constructor(
                 )
                 == PackageManager.PERMISSION_GRANTED
             ) {
-                mainActivity.showMessage("Разрешение на запись и считывание данных получено")
+                mainActivity.showMessage(
+                    mainActivity.getString(R.string.get_permission_write_read_text))
                 true
             } else {
-                mainActivity.showMessage("Разрешение на запись и считывание данных отсутствует")
+                mainActivity.showMessage(
+                    mainActivity.getString(R.string.not_get_permission_write_read_text))
                 ActivityCompat.requestPermissions(
                     mainActivity,
                     arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
@@ -44,7 +47,8 @@ class MainPresenter @Inject constructor(
                 false
             }
         } else {
-            mainActivity.showMessage("Разрешение на запись и считывание данных получено")
+            mainActivity.showMessage(
+                mainActivity.getString(R.string.get_permission_write_read_text))
             true
         }
     }

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.geekbrains.popular.libraries.githubview_homeworks.App
+import ru.geekbrains.popular.libraries.githubview_homeworks.R
 import ru.geekbrains.popular.libraries.githubview_homeworks.databinding.FragmentReposBinding
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.UserChooseRepository
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubRepoModel
@@ -46,8 +47,9 @@ class ReposFragment: MvpAppCompatFragment(), ReposView, BackButtonListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         /** Установка заголовка окна */
-        binding.reposTitle.text =
-            "Список репозиториев\nпользователя \"${userChoose.getGithubUserModel().login}\":"
+        binding.reposTitle.text = "${
+            requireActivity().getString(R.string.repos_fragment_forks_title_text)} \"${
+                userChoose.getGithubUserModel().login}\":"
         /** Установка списка репозиториев пользователя */
         binding.reposRecycler.layoutManager = LinearLayoutManager(requireContext())
         binding.reposRecycler.adapter = adapter
@@ -74,11 +76,13 @@ class ReposFragment: MvpAppCompatFragment(), ReposView, BackButtonListener {
         fun newInstance() = ReposFragment()
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onResume() {
         super.onResume()
 
         binding.reposTitle.text =
-            "Список репозиториев\nпользователя \"${userChoose.getGithubUserModel().login}\":"
+            "${requireActivity().getString(R.string.repos_fragment_forks_title_text)} \"${
+                userChoose.getGithubUserModel().login}\":"
         binding.reposRecycler.layoutManager = LinearLayoutManager(requireContext())
         binding.reposRecycler.adapter = adapter
     }

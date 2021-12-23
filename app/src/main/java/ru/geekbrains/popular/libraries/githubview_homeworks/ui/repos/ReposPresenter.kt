@@ -1,11 +1,13 @@
 package ru.geekbrains.popular.libraries.githubview_homeworks.ui.repos
 
+import android.content.Context
 import android.util.Log
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpPresenter
 import ru.geekbrains.popular.libraries.githubview_homeworks.App
+import ru.geekbrains.popular.libraries.githubview_homeworks.R
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubRepoRepository
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.UserChooseRepository
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubRepoModel
@@ -17,7 +19,8 @@ class ReposPresenter @Inject constructor(
     private val router: Router,
     private val repo: GithubRepoRepository,
     private val appScreens: AppScreens,
-    private val userChoose: UserChooseRepository
+    private val userChoose: UserChooseRepository,
+    private val context: Context
 ): MvpPresenter<ReposView>() {
 
     override fun onFirstViewAttach() {
@@ -41,7 +44,7 @@ class ReposPresenter @Inject constructor(
                     }, {
                         Log.e(
                             "mylogs",
-                            "Ошибка при получении репозиториев",
+                            "${context.getString(R.string.error_not_repos_List)}",
                             it
                         )
                         viewState.hideLoading()

@@ -13,6 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import moxy.MvpPresenter
 import ru.geekbrains.popular.libraries.githubview_homeworks.App
+import ru.geekbrains.popular.libraries.githubview_homeworks.R
 import ru.geekbrains.popular.libraries.githubview_homeworks.di.scope.containers.UsersScopeContainer
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubUsersRepository
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.UserChooseRepository
@@ -31,7 +32,8 @@ class UsersPresenter @Inject constructor(
     private val networkStatus: NetworkStatus,
     private val appScreens: AppScreens,
     private val userChoose: UserChooseRepository,
-    private val usersScopeContainer: UsersScopeContainer
+    private val usersScopeContainer: UsersScopeContainer,
+    private val context: Context
 ): MvpPresenter<UsersView>() {
     /** Исходные данные */ //region
     // users
@@ -70,7 +72,7 @@ class UsersPresenter @Inject constructor(
                     viewState.updateList(users)
                     viewState.hideLoading()
                 }, { e ->
-                    Log.e("mylogs", "Ошибка при получении пользователей", e)
+                    Log.e("mylogs", "${context.getString(R.string.error_not_users_List)}", e)
                     viewState.hideLoading()
                 }
             )
@@ -88,14 +90,12 @@ class UsersPresenter @Inject constructor(
     }
 
     class UsersListPresenter @Inject constructor(
-        context: Context,
-        networkStatus: NetworkStatus
+        private val context: Context,
+        private val networkStatus: NetworkStatus
 ): IListPresenter<UserItemView> {
 
         var users: MutableList<GithubUserModel> = mutableListOf<GithubUserModel>()
         private var file: File = File("")
-        private val networkStatus: NetworkStatus = networkStatus
-        private val context: Context = context
 
         override var itemClickListener: (UserItemView) -> Unit = {}
 
