@@ -4,12 +4,13 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubRepoMode
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubRepoOwner
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
 
-class UserChooseRepositoryImpl: UserChooseRepository {
+class UserChooseRepositoryImpl : UserChooseRepository {
     /** Исходные данные */ //region
     // githubUserModel
     private var githubUserModel: GithubUserModel =
         GithubUserModel("", "", "", "")
     private var users: List<GithubUserModel> = listOf()
+
     // githubRepoModel
     private var githubRepoModel: GithubRepoModel =
         GithubRepoModel("", "", GithubRepoOwner(""), 0)

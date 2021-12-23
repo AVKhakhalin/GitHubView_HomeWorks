@@ -6,8 +6,8 @@ import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import moxy.MvpPresenter
-import ru.geekbrains.popular.libraries.githubview_homeworks.App
 import ru.geekbrains.popular.libraries.githubview_homeworks.R
+import ru.geekbrains.popular.libraries.githubview_homeworks.di.scope.containers.ReposScopeContainer
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubRepoRepository
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.UserChooseRepository
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubRepoModel
@@ -20,8 +20,9 @@ class ReposPresenter @Inject constructor(
     private val repo: GithubRepoRepository,
     private val appScreens: AppScreens,
     private val userChoose: UserChooseRepository,
-    private val context: Context
-): MvpPresenter<ReposView>() {
+    private val context: Context,
+    private val reposScopeContainer: ReposScopeContainer
+) : MvpPresenter<ReposView>() {
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -61,5 +62,11 @@ class ReposPresenter @Inject constructor(
     fun backPressed(): Boolean {
         router.exit()
         return true
+    }
+
+    /** Уничтожение ReposSubcomponent при уничтожении данного презентера */
+    override fun onDestroy() {
+        reposScopeContainer.destroyGithubReposSubcomponent()
+        super.onDestroy()
     }
 }

@@ -13,7 +13,7 @@ import javax.inject.Inject
 class MainPresenter @Inject constructor(
     private val router: Router,
     private val appScreens: AppScreens
-): MvpPresenter<MainView>() {
+) : MvpPresenter<MainView>() {
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -34,11 +34,13 @@ class MainPresenter @Inject constructor(
                 == PackageManager.PERMISSION_GRANTED
             ) {
                 mainActivity.showMessage(
-                    mainActivity.getString(R.string.get_permission_write_read_text))
+                    mainActivity.getString(R.string.get_permission_write_read_text)
+                )
                 true
             } else {
                 mainActivity.showMessage(
-                    mainActivity.getString(R.string.not_get_permission_write_read_text))
+                    mainActivity.getString(R.string.not_get_permission_write_read_text)
+                )
                 ActivityCompat.requestPermissions(
                     mainActivity,
                     arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
@@ -48,7 +50,8 @@ class MainPresenter @Inject constructor(
             }
         } else {
             mainActivity.showMessage(
-                mainActivity.getString(R.string.get_permission_write_read_text))
+                mainActivity.getString(R.string.get_permission_write_read_text)
+            )
             true
         }
     }

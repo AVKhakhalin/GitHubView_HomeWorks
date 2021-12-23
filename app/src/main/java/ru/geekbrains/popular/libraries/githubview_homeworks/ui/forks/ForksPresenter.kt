@@ -9,7 +9,7 @@ import javax.inject.Inject
 class ForksPresenter @Inject constructor(
     private val router: Router,
     private val forksScopeContainer: ForksScopeContainer
-): MvpPresenter<MainView>() {
+) : MvpPresenter<MainView>() {
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()

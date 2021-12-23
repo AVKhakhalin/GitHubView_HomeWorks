@@ -5,7 +5,6 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.di.modules.*
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.UserChooseRepository
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.main.MainActivity
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.main.MainPresenter
-import ru.geekbrains.popular.libraries.githubview_homeworks.ui.repos.ReposPresenter
 import javax.inject.Singleton
 
 @Singleton
@@ -28,8 +27,8 @@ interface AppComponent {
     //endregion
 
     /** Subcomponents */ //region
-    fun reposPresenter(): ReposPresenter
-    fun forksSubcomponent(): GithubForksSubcomponent
     fun usersSubcomponent(): GithubUsersSubcomponent
+    fun reposSubcomponent(): GithubReposSubcomponent
+    fun forksSubcomponent(): GithubForksSubcomponent
     //endregion
 }

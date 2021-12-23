@@ -6,16 +6,17 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubRepoMode
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubRepoOwner
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
 
-class GithubRepoCacheImpl (
+class GithubRepoCacheImpl(
     private val db: AppDatabase
-): GithubRepoCache {
+) : GithubRepoCache {
     override fun getCacheRepo(userModel: GithubUserModel): Single<List<GithubRepoModel>> {
         return db.repositoryDao.getByUserId(userModel.id)
-                .map { list ->
-                    list.map { repo ->
-                        GithubRepoModel(
-                            repo.id, repo.name, GithubRepoOwner(repo.userId), repo.forksCount)
-                    }
+            .map { list ->
+                list.map { repo ->
+                    GithubRepoModel(
+                        repo.id, repo.name, GithubRepoOwner(repo.userId), repo.forksCount
+                    )
                 }
+            }
     }
 }

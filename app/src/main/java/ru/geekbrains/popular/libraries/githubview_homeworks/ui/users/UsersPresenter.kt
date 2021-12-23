@@ -34,10 +34,11 @@ class UsersPresenter @Inject constructor(
     private val userChoose: UserChooseRepository,
     private val usersScopeContainer: UsersScopeContainer,
     private val context: Context
-): MvpPresenter<UsersView>() {
+) : MvpPresenter<UsersView>() {
     /** Исходные данные */ //region
     // users
     private var users: List<GithubUserModel> = listOf()
+
     // usersListPresenter
     val usersListPresenter = UsersListPresenter(App.instance.applicationContext, networkStatus)
     //endregion
@@ -92,7 +93,7 @@ class UsersPresenter @Inject constructor(
     class UsersListPresenter @Inject constructor(
         private val context: Context,
         private val networkStatus: NetworkStatus
-): IListPresenter<UserItemView> {
+    ) : IListPresenter<UserItemView> {
 
         var users: MutableList<GithubUserModel> = mutableListOf<GithubUserModel>()
         private var file: File = File("")
@@ -108,7 +109,8 @@ class UsersPresenter @Inject constructor(
             if (networkStatus.isOnline()) {
                 view.setAvatar(user.avatarUrl)
                 file = File(
-                    "${context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+                    "${
+                        context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
                     }/CacheAvatars/${user.login}"
                 )
 

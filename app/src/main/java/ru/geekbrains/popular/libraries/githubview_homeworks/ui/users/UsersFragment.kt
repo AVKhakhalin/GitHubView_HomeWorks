@@ -15,20 +15,23 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonLi
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.users.adapter.UsersAdapter
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.utils.GlideImageLoader
 
-class UsersFragment: MvpAppCompatFragment(), UsersView, BackButtonListener {
+class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
 
     /** Задание переменных */ //region
     // userChoose
     private val userChoose: UserChooseRepository = App.instance.appComponent.userChoose()
+
     // presenter
     private val presenter by moxyPresenter {
         App.instance.initGithubUsersSubcomponent()
         App.instance.usersSubcomponent?.provideUsersPresenter()!!
     }
+
     // binding
     private var _binding: FragmentUsersBinding? = null
     private val binding
         get() = _binding!!
+
     // adapter
     private val adapter by lazy {
         UsersAdapter(

@@ -4,9 +4,9 @@ import io.reactivex.rxjava3.core.Single
 import ru.geekbrains.popular.libraries.githubview_homeworks.db.AppDatabase
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
 
-class GithubUsersCacheImpl (
+class GithubUsersCacheImpl(
     private val db: AppDatabase
-): GithubUsersCache {
+) : GithubUsersCache {
     override fun getCacheUsers(): Single<List<GithubUserModel>> {
         return db.userDao.getAll()
             .map { roomModel ->

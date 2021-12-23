@@ -15,18 +15,22 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.domain.UserChooseRep
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubRepoModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
 
-class ReposFragment: MvpAppCompatFragment(), ReposView, BackButtonListener {
+class ReposFragment : MvpAppCompatFragment(), ReposView, BackButtonListener {
     /** ЗАДАНИЕ ПЕРЕМЕННЫХ */ //region
     // userChoose
     private val userChoose: UserChooseRepository = App.instance.appComponent.userChoose()
+
     // presenter
     private val presenter by moxyPresenter {
-        App.instance.appComponent.reposPresenter()
+        App.instance.initGithubReposSubcomponent()
+        App.instance.reposSubcomponent?.provideReposPresenter()!!
     }
+
     // binding
     private var _binding: FragmentReposBinding? = null
     private val binding
         get() = _binding!!
+
     // adapter
     private val adapter by lazy {
         ReposAdapter { presenter.onRepoClicked(it) }
@@ -48,8 +52,10 @@ class ReposFragment: MvpAppCompatFragment(), ReposView, BackButtonListener {
         super.onViewCreated(view, savedInstanceState)
         /** Установка заголовка окна */
         binding.reposTitle.text = "${
-            requireActivity().getString(R.string.repos_fragment_forks_title_text)} \"${
-                userChoose.getGithubUserModel().login}\":"
+            requireActivity().getString(R.string.repos_fragment_forks_title_text)
+        } \"${
+            userChoose.getGithubUserModel().login
+        }\":"
         /** Установка списка репозиториев пользователя */
         binding.reposRecycler.layoutManager = LinearLayoutManager(requireContext())
         binding.reposRecycler.adapter = adapter
@@ -82,7 +88,8 @@ class ReposFragment: MvpAppCompatFragment(), ReposView, BackButtonListener {
 
         binding.reposTitle.text =
             "${requireActivity().getString(R.string.repos_fragment_forks_title_text)} \"${
-                userChoose.getGithubUserModel().login}\":"
+                userChoose.getGithubUserModel().login
+            }\":"
         binding.reposRecycler.layoutManager = LinearLayoutManager(requireContext())
         binding.reposRecycler.adapter = adapter
     }

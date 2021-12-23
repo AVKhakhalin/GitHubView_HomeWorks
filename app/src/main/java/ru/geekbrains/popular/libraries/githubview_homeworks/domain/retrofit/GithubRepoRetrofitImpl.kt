@@ -7,10 +7,10 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubRepoMode
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.remote.RetrofitService
 
-class GithubRepoRetrofitImpl (
+class GithubRepoRetrofitImpl(
     private val retrofitService: RetrofitService,
     private val db: AppDatabase
-): GithubRepoRetrofit {
+) : GithubRepoRetrofit {
     override fun getRetrofitRepo(userModel: GithubUserModel): Single<List<GithubRepoModel>> {
         return retrofitService.getRepos(userModel.reposUrl)
             .flatMap { repos ->
@@ -18,7 +18,7 @@ class GithubRepoRetrofitImpl (
                     RoomGithubRepo(it.id, it.name, it.owner.id, it.forksCount)
                 }
                 db.repositoryDao.insert(dbRepos)
-                    .toSingle{ repos }
-        }
+                    .toSingle { repos }
+            }
     }
 }

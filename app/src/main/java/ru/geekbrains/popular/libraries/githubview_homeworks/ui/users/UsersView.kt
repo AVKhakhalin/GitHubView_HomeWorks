@@ -4,7 +4,7 @@ import moxy.MvpView
 import moxy.viewstate.strategy.alias.AddToEndSingle
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
 
-interface UsersView: MvpView {
+interface UsersView : MvpView {
 
     @AddToEndSingle
     fun updateList(users: List<GithubUserModel>)

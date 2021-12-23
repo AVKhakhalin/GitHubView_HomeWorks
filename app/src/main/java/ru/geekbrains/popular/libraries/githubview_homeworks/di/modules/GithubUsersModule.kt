@@ -25,8 +25,7 @@ abstract class GithubUsersModule {
             networkStatus: NetworkStatus,
             githubUsersRetrofit: GithubUsersRetrofit,
             githubUsersCache: GithubUsersCache
-        ): GithubUsersRepository
-        {
+        ): GithubUsersRepository {
             return GithubUsersRepositoryImpl(networkStatus, githubUsersRetrofit, githubUsersCache)
         }
 

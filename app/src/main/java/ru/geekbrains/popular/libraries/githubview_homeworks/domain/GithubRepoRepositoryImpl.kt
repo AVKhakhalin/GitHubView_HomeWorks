@@ -7,11 +7,11 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubRepoMode
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.remote.connectivity.NetworkStatus
 
-class GithubRepoRepositoryImpl (
+class GithubRepoRepositoryImpl(
     private val networkStatus: NetworkStatus,
     private val githubRepoRetrofit: GithubRepoRetrofit,
     private val githubRepoCache: GithubRepoCache
-): GithubRepoRepository {
+) : GithubRepoRepository {
     override fun getRepos(userModel: GithubUserModel): Single<List<GithubRepoModel>> {
         return if (networkStatus.isOnline())
             githubRepoRetrofit.getRetrofitRepo(userModel)

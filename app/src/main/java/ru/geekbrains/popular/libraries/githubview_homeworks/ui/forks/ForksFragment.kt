@@ -13,17 +13,19 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.databinding.Fragment
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.UserChooseRepository
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
 
-class ForksFragment: MvpAppCompatFragment(), ForksView, BackButtonListener {
+class ForksFragment : MvpAppCompatFragment(), ForksView, BackButtonListener {
     /** ЗАДАНИЕ ПЕРЕМЕННЫХ */ //region
     // binding
     private var _binding: FragmentForksBinding? = null
     private val binding
         get() = _binding!!
+
     // presenter
     private val presenter by moxyPresenter {
         App.instance.initForksSubcomponent()
         App.instance.forksSubcomponent?.provideForksPresenter()!!
     }
+
     // userChoose
     private val userChoose: UserChooseRepository = App.instance.appComponent.userChoose()
     //endregion
@@ -45,20 +47,37 @@ class ForksFragment: MvpAppCompatFragment(), ForksView, BackButtonListener {
         super.onViewCreated(view, savedInstanceState)
 
         binding.repoTitle.text =
-            "${requireActivity().getString(
-                R.string.forks_fragment_repo_title_information_text)} \"${
-                userChoose.getGithubUserModel().login}\":"
+            "${
+                requireActivity().getString(
+                    R.string.forks_fragment_repo_title_information_text
+                )
+            } \"${
+                userChoose.getGithubUserModel().login
+            }\":"
         binding.repoId.text = "${requireActivity().getString(R.string.forks_fragment_id_text)} ${
-            userChoose.getGithubRepoModel().id}"
-        binding.repoName.text = "${requireActivity().getString(
-            R.string.forks_fragment_name_repo_text)} ${
-            userChoose.getGithubRepoModel().name}"
-        binding.repoOwnerId.text = "${requireActivity().getString(
-            R.string.forks_fragment_id_owner_text)} ${
-            userChoose.getGithubRepoModel().owner.id}"
-        binding.forksNumber.text = "${requireActivity().getString(
-            R.string.forks_fragment_forks_number_text)} ${
-            userChoose.getGithubRepoModel().forksCount}"
+            userChoose.getGithubRepoModel().id
+        }"
+        binding.repoName.text = "${
+            requireActivity().getString(
+                R.string.forks_fragment_name_repo_text
+            )
+        } ${
+            userChoose.getGithubRepoModel().name
+        }"
+        binding.repoOwnerId.text = "${
+            requireActivity().getString(
+                R.string.forks_fragment_id_owner_text
+            )
+        } ${
+            userChoose.getGithubRepoModel().owner.id
+        }"
+        binding.forksNumber.text = "${
+            requireActivity().getString(
+                R.string.forks_fragment_forks_number_text
+            )
+        } ${
+            userChoose.getGithubRepoModel().forksCount
+        }"
     }
 
     @SuppressLint("SetTextI18n")
@@ -66,20 +85,37 @@ class ForksFragment: MvpAppCompatFragment(), ForksView, BackButtonListener {
         super.onResume()
 
         binding.repoTitle.text =
-            "${requireActivity().getString(
-                R.string.forks_fragment_repo_title_information_text)} \"${
-                userChoose.getGithubUserModel().login}\":"
+            "${
+                requireActivity().getString(
+                    R.string.forks_fragment_repo_title_information_text
+                )
+            } \"${
+                userChoose.getGithubUserModel().login
+            }\":"
         binding.repoId.text = "${requireActivity().getString(R.string.forks_fragment_id_text)} ${
-            userChoose.getGithubRepoModel().id}"
-        binding.repoName.text = "${requireActivity().getString(
-            R.string.forks_fragment_name_repo_text)} ${
-            userChoose.getGithubRepoModel().name}"
-        binding.repoOwnerId.text = "${requireActivity().getString(
-            R.string.forks_fragment_id_owner_text)} ${
-            userChoose.getGithubRepoModel().owner.id}"
-        binding.forksNumber.text = "${requireActivity().getString(
-            R.string.forks_fragment_forks_number_text)} ${
-            userChoose.getGithubRepoModel().forksCount}"
+            userChoose.getGithubRepoModel().id
+        }"
+        binding.repoName.text = "${
+            requireActivity().getString(
+                R.string.forks_fragment_name_repo_text
+            )
+        } ${
+            userChoose.getGithubRepoModel().name
+        }"
+        binding.repoOwnerId.text = "${
+            requireActivity().getString(
+                R.string.forks_fragment_id_owner_text
+            )
+        } ${
+            userChoose.getGithubRepoModel().owner.id
+        }"
+        binding.forksNumber.text = "${
+            requireActivity().getString(
+                R.string.forks_fragment_forks_number_text
+            )
+        } ${
+            userChoose.getGithubRepoModel().forksCount
+        }"
     }
 
     override fun backPressed(): Boolean {
