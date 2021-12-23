@@ -13,6 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import moxy.MvpPresenter
 import ru.geekbrains.popular.libraries.githubview_homeworks.App
+import ru.geekbrains.popular.libraries.githubview_homeworks.di.scope.containers.UsersScopeContainer
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.GithubUsersRepository
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.UserChooseRepository
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
@@ -29,7 +30,8 @@ class UsersPresenter @Inject constructor(
     private val usersRepository: GithubUsersRepository,
     private val networkStatus: NetworkStatus,
     private val appScreens: AppScreens,
-    private val userChoose: UserChooseRepository
+    private val userChoose: UserChooseRepository,
+    private val usersScopeContainer: UsersScopeContainer
 ): MvpPresenter<UsersView>() {
     /** Исходные данные */ //region
     // users
@@ -77,6 +79,12 @@ class UsersPresenter @Inject constructor(
     fun backPressed(): Boolean {
         router.exit()
         return true
+    }
+
+    /** Уничтожение GithubUsersSubcomponent при уничтожении данного презентера */
+    override fun onDestroy() {
+        usersScopeContainer.destroyGithubUsersSubcomponent()
+        super.onDestroy()
     }
 
     class UsersListPresenter @Inject constructor(

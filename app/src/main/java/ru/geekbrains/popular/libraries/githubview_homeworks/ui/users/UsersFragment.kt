@@ -22,7 +22,8 @@ class UsersFragment: MvpAppCompatFragment(), UsersView, BackButtonListener {
     private val userChoose: UserChooseRepository = App.instance.appComponent.userChoose()
     // presenter
     private val presenter by moxyPresenter {
-        App.instance.appComponent.usersPresenter()
+        App.instance.initGithubUsersSubcomponent()
+        App.instance.usersSubcomponent?.provideUsersPresenter()!!
     }
     // binding
     private var _binding: FragmentUsersBinding? = null
