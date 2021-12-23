@@ -13,9 +13,9 @@ import javax.inject.Singleton
 @Singleton
 @Component(
     modules = [
-        DbModule::class,
         CiceroneModule::class,
         ContextModule::class,
+        DbModule::class,
         NetworkModule::class,
         RepositoryModule::class
     ]
@@ -24,11 +24,13 @@ import javax.inject.Singleton
 interface AppComponent {
 
     fun mainPresenter(): MainPresenter
-    fun forksPresenter(): ForksPresenter
+
     fun usersPresenter(): UsersPresenter
     fun reposPresenter(): ReposPresenter
 
     fun injectMainActivity(mainActivity: MainActivity)
 
     fun userChoose(): UserChooseRepository
+
+    fun forksSubcomponent(): GithubForksSubcomponent
 }

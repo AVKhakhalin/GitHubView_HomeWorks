@@ -12,7 +12,7 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.databinding.Fragment
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.UserChooseRepository
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
 
-class ForksFragment : MvpAppCompatFragment(), ForksView, BackButtonListener {
+class ForksFragment: MvpAppCompatFragment(), ForksView, BackButtonListener {
     /** ЗАДАНИЕ ПЕРЕМЕННЫХ */ //region
     // binding
     private var _binding: FragmentForksBinding? = null
@@ -20,7 +20,8 @@ class ForksFragment : MvpAppCompatFragment(), ForksView, BackButtonListener {
         get() = _binding!!
     // presenter
     private val presenter by moxyPresenter {
-        App.instance.appComponent.forksPresenter()
+        App.instance.initForksSubcomponent()
+        App.instance.forksSubcomponent?.provideForksPresenter()!!
     }
     // userChoose
     private val userChoose: UserChooseRepository = App.instance.appComponent.userChoose()
