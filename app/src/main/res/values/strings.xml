@@ -25,4 +25,5 @@
     <string name="error_not_user_name">Ошибка: Нет запрошенного пользователя в списке</string>
     <string name="error_not_users_List">Ошибка, список пользователей получить не удалось</string>
     <string name="error_not_repos_List">Ошибка, список репозиториев получить не удалось</string>
+    <string name="error_wrong_view">Неверное состояние вью:</string>
 </resources>

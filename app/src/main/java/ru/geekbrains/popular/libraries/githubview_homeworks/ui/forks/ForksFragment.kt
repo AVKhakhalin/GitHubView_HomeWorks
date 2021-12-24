@@ -2,9 +2,7 @@ package ru.geekbrains.popular.libraries.githubview_homeworks.ui.forks
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.geekbrains.popular.libraries.githubview_homeworks.App
@@ -12,13 +10,12 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.R
 import ru.geekbrains.popular.libraries.githubview_homeworks.databinding.FragmentForksBinding
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.UserChooseRepository
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
+import ru.geekbrains.popular.libraries.githubview_homeworks.ui.utils.viewBinding
 
-class ForksFragment : MvpAppCompatFragment(), ForksView, BackButtonListener {
+class ForksFragment : MvpAppCompatFragment(R.layout.fragment_forks), ForksView, BackButtonListener {
     /** ЗАДАНИЕ ПЕРЕМЕННЫХ */ //region
     // binding
-    private var _binding: FragmentForksBinding? = null
-    private val binding
-        get() = _binding!!
+    private val binding by viewBinding<FragmentForksBinding>()
 
     // presenter
     private val presenter by moxyPresenter {
@@ -32,14 +29,6 @@ class ForksFragment : MvpAppCompatFragment(), ForksView, BackButtonListener {
 
     companion object {
         fun newInstance() = ForksFragment()
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentForksBinding.inflate(inflater, container, false)
-        return binding.root
     }
 
     @SuppressLint("SetTextI18n")

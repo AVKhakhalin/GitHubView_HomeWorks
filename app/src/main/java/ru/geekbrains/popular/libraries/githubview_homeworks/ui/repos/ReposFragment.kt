@@ -2,9 +2,7 @@ package ru.geekbrains.popular.libraries.githubview_homeworks.ui.repos
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
@@ -14,38 +12,24 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.databinding.Fragment
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.UserChooseRepository
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubRepoModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
+import ru.geekbrains.popular.libraries.githubview_homeworks.ui.utils.viewBinding
 
-class ReposFragment : MvpAppCompatFragment(), ReposView, BackButtonListener {
+class ReposFragment : MvpAppCompatFragment(R.layout.fragment_repos), ReposView, BackButtonListener {
     /** ЗАДАНИЕ ПЕРЕМЕННЫХ */ //region
     // userChoose
     private val userChoose: UserChooseRepository = App.instance.appComponent.userChoose()
-
     // presenter
     private val presenter by moxyPresenter {
         App.instance.initGithubReposSubcomponent()
         App.instance.reposSubcomponent?.provideReposPresenter()!!
     }
-
     // binding
-    private var _binding: FragmentReposBinding? = null
-    private val binding
-        get() = _binding!!
-
+    private val binding by viewBinding<FragmentReposBinding>()
     // adapter
     private val adapter by lazy {
         ReposAdapter { presenter.onRepoClicked(it) }
     }
     //endregion
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentReposBinding.inflate(inflater, container, false)
-        return binding.root
-
-    }
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

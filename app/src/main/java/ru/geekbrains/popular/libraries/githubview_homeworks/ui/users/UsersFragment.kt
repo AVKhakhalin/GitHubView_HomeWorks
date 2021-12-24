@@ -1,21 +1,21 @@
 package ru.geekbrains.popular.libraries.githubview_homeworks.ui.users
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 import ru.geekbrains.popular.libraries.githubview_homeworks.App
+import ru.geekbrains.popular.libraries.githubview_homeworks.R
 import ru.geekbrains.popular.libraries.githubview_homeworks.databinding.FragmentUsersBinding
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.UserChooseRepository
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.users.adapter.UsersAdapter
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.utils.GlideImageLoader
+import ru.geekbrains.popular.libraries.githubview_homeworks.ui.utils.viewBinding
 
-class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
+class UsersFragment : MvpAppCompatFragment(R.layout.fragment_users), UsersView, BackButtonListener {
 
     /** Задание переменных */ //region
     // userChoose
@@ -28,9 +28,7 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
     }
 
     // binding
-    private var _binding: FragmentUsersBinding? = null
-    private val binding
-        get() = _binding!!
+    private val binding by viewBinding<FragmentUsersBinding>()
 
     // adapter
     private val adapter by lazy {
@@ -43,15 +41,6 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
 
     companion object {
         fun newInstance() = UsersFragment()
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentUsersBinding.inflate(inflater, container, false)
-        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -78,11 +67,6 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
     override fun backPressed(): Boolean {
         presenter.backPressed()
         return true
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 
     override fun onResume() {
