@@ -7,6 +7,7 @@ def glideVersion = "4.11.0"
 def rxJavaVersion = "3.0.0"
 def ciceronyVersion = "6.6"
 def moxyVersion = "2.2.2"
+def lifecycleVersion = "2.2.0"
 ext {
     libs = [:]
 
@@ -57,4 +58,14 @@ ext {
     moxy.compiler = "com.github.moxy-community:moxy-compiler:$moxyVersion"
     moxy.ktx = "com.github.moxy-community:moxy-ktx:$moxyVersion"
     moxy.androidx = "com.github.moxy-community:moxy-androidx:$moxyVersion"
+    // Lifecycle:
+    lifecycle = [:]
+    libs.lifecycle = lifecycle
+    lifecycle.extensions = "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
+        // LiveData
+    lifecycle.ktx = "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
+        // Lifecycles only (without ViewModel or LiveData)
+    lifecycle.runtimektx = "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
+    lifecycle.process = "androidx.lifecycle:lifecycle-process:$lifecycleVersion"
+    lifecycle.java8 = "androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion"
 }
