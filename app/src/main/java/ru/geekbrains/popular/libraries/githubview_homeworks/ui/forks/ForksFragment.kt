@@ -10,7 +10,7 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.R
 import ru.geekbrains.popular.libraries.githubview_homeworks.databinding.FragmentForksBinding
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.UserChooseRepository
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
-import ru.geekbrains.popular.libraries.githubview_homeworks.ui.utils.viewBinding
+import ru.geekbrains.popular.libraries.githubview_homeworks.ui.utils.binding.viewBinding
 
 class ForksFragment : MvpAppCompatFragment(R.layout.fragment_forks), ForksView, BackButtonListener {
     /** ЗАДАНИЕ ПЕРЕМЕННЫХ */ //region

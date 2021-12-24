@@ -12,19 +12,22 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.databinding.Fragment
 import ru.geekbrains.popular.libraries.githubview_homeworks.domain.UserChooseRepository
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubRepoModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
-import ru.geekbrains.popular.libraries.githubview_homeworks.ui.utils.viewBinding
+import ru.geekbrains.popular.libraries.githubview_homeworks.ui.utils.binding.viewBinding
 
 class ReposFragment : MvpAppCompatFragment(R.layout.fragment_repos), ReposView, BackButtonListener {
     /** ЗАДАНИЕ ПЕРЕМЕННЫХ */ //region
     // userChoose
     private val userChoose: UserChooseRepository = App.instance.appComponent.userChoose()
+
     // presenter
     private val presenter by moxyPresenter {
         App.instance.initGithubReposSubcomponent()
         App.instance.reposSubcomponent?.provideReposPresenter()!!
     }
+
     // binding
     private val binding by viewBinding<FragmentReposBinding>()
+
     // adapter
     private val adapter by lazy {
         ReposAdapter { presenter.onRepoClicked(it) }

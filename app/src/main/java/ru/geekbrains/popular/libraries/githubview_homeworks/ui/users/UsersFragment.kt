@@ -12,8 +12,8 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.domain.UserChooseRep
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.BackButtonListener
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.users.adapter.UsersAdapter
-import ru.geekbrains.popular.libraries.githubview_homeworks.ui.utils.GlideImageLoader
-import ru.geekbrains.popular.libraries.githubview_homeworks.ui.utils.viewBinding
+import ru.geekbrains.popular.libraries.githubview_homeworks.ui.utils.binding.viewBinding
+import ru.geekbrains.popular.libraries.githubview_homeworks.ui.utils.imageloader.GlideImageLoader
 
 class UsersFragment : MvpAppCompatFragment(R.layout.fragment_users), UsersView, BackButtonListener {
 

@@ -9,7 +9,7 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.databinding.ItemUser
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.users.UserItemView
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.users.UsersPresenter
-import ru.geekbrains.popular.libraries.githubview_homeworks.ui.utils.ImageLoader
+import ru.geekbrains.popular.libraries.githubview_homeworks.ui.utils.imageloader.ImageLoader
 
 class UsersAdapter(
     private val presenter: UsersPresenter.UsersListPresenter,

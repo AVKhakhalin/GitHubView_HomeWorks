@@ -11,10 +11,6 @@ class ForksPresenter @Inject constructor(
     private val forksScopeContainer: ForksScopeContainer
 ) : MvpPresenter<MainView>() {
 
-    override fun onFirstViewAttach() {
-        super.onFirstViewAttach()
-    }
-
     fun backPressed(): Boolean {
         router.exit()
         return true

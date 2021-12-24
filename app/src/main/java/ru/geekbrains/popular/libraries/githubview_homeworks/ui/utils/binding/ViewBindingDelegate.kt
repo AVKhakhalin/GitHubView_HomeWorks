@@ -1,4 +1,4 @@
-package ru.geekbrains.popular.libraries.githubview_homeworks.ui.utils
+package ru.geekbrains.popular.libraries.githubview_homeworks.ui.utils.binding
 
 import android.view.View
 import androidx.fragment.app.Fragment

@@ -21,6 +21,7 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserMode
 import ru.geekbrains.popular.libraries.githubview_homeworks.remote.connectivity.NetworkStatus
 import ru.geekbrains.popular.libraries.githubview_homeworks.screens.AppScreens
 import ru.geekbrains.popular.libraries.githubview_homeworks.ui.base.IListPresenter
+import ru.geekbrains.popular.libraries.githubview_homeworks.ui.utils.resources.ResourcesProvider
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
@@ -33,7 +34,7 @@ class UsersPresenter @Inject constructor(
     private val appScreens: AppScreens,
     private val userChoose: UserChooseRepository,
     private val usersScopeContainer: UsersScopeContainer,
-    private val context: Context
+    private val resourcesProvider: ResourcesProvider
 ) : MvpPresenter<UsersView>() {
     /** Исходные данные */ //region
     // users
@@ -73,7 +74,10 @@ class UsersPresenter @Inject constructor(
                     viewState.updateList(users)
                     viewState.hideLoading()
                 }, { e ->
-                    Log.e("mylogs", "${context.getString(R.string.error_not_users_List)}", e)
+                    Log.e(
+                        "mylogs",
+                        resourcesProvider.getString(R.string.error_not_users_List), e
+                    )
                     viewState.hideLoading()
                 }
             )

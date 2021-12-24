@@ -1,4 +1,4 @@
-package ru.geekbrains.popular.libraries.githubview_homeworks.ui.utils
+package ru.geekbrains.popular.libraries.githubview_homeworks.ui.utils.imageloader
 
 import android.widget.ImageView
 import com.bumptech.glide.Glide

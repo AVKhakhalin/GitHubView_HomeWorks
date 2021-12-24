@@ -1,6 +1,5 @@
 package ru.geekbrains.popular.libraries.githubview_homeworks.ui.repos
 
-import android.content.Context
 import android.util.Log
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -13,6 +12,7 @@ import ru.geekbrains.popular.libraries.githubview_homeworks.domain.UserChooseRep
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubRepoModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.model.GithubUserModel
 import ru.geekbrains.popular.libraries.githubview_homeworks.screens.AppScreens
+import ru.geekbrains.popular.libraries.githubview_homeworks.ui.utils.resources.ResourcesProvider
 import javax.inject.Inject
 
 class ReposPresenter @Inject constructor(
@@ -20,8 +20,8 @@ class ReposPresenter @Inject constructor(
     private val repo: GithubRepoRepository,
     private val appScreens: AppScreens,
     private val userChoose: UserChooseRepository,
-    private val context: Context,
-    private val reposScopeContainer: ReposScopeContainer
+    private val reposScopeContainer: ReposScopeContainer,
+    private val resourcesProvider: ResourcesProvider
 ) : MvpPresenter<ReposView>() {
 
     override fun onFirstViewAttach() {
@@ -45,7 +45,7 @@ class ReposPresenter @Inject constructor(
                     }, {
                         Log.e(
                             "mylogs",
-                            "${context.getString(R.string.error_not_repos_List)}",
+                            resourcesProvider.getString(R.string.error_not_repos_List),
                             it
                         )
                         viewState.hideLoading()
